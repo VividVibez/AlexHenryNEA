@@ -13,6 +13,8 @@ body {
     align-items: center;
     min-height: 100vh;
     background-image: url(images/indeximg.avif);
+    background-position: center;
+    background-size: cover;
 }
 
 .wrapper {
