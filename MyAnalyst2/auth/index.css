@@ -17,6 +17,7 @@ body {
     background-size: cover;
 }
 
+
 .wrapper {
     width: 420px;
     background: transparent;
@@ -103,21 +104,16 @@ body {
     margin-top: 20px;
 }
 
-.register button {
+.register a {
     color: #fff;
     text-decoration: none;
     font-weight: 600;
-    background: none!important;
     border: none;
-    padding: 0!important;
     margin-left: 5px;
     cursor: pointer;
 }
 
-.register button:hover {
+.register a:hover {
     text-decoration: underline;
 }
 
-.signup {
-    display: none;
-}
