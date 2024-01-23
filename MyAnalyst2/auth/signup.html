@@ -9,23 +9,25 @@
     <script src="index.js" defer></script>
 </head>
 <body>
-    <div class="wrapper" id="login">
-        <form class="hidden" id="signup" class="signup" action="">
+    <div class="wrapper">
 
-            <h1>Register</h1>
+        <h1>Register</h1>
+        <form  class="signup" action="signup.php" method="post">
+
+            
 
             <div class="input-box">
-                <input type="text"  placeholder="Username" required>
+                <input type="text"  placeholder="Username" id="signupUsername" name="signupUsername">
                 <i class='bx bxs-user'></i>
             </div>
 
             <div class="input-box">
-                <input type="password"  placeholder="Password" required>
+                <input type="password"  placeholder="Password" id="signupPassword" name="signupPassword">
                 <i class='bx bxs-lock-alt'></i>
             </div>        
 
             <div class="input-box">
-                <input type="password"  placeholder="Password" required>
+                <input type="password"  placeholder="Password" id="signupPasswordConfirm" name="signupPasswordConfirm">
                 <i class='bx bxs-lock-alt'></i>
             </div>        
 
