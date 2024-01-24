@@ -30,6 +30,27 @@ if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password)
 
 $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-print_r($_POST);
-var_dump($password_hash)
+$mysqli = require __DIR__ . "/database.php";
+
+$sql = "INSERT INTO user (username, password_hash)
+        VALUES (?,?)";
+
+$stmt = $mysqli->stmt_init();
+
+if ( ! $stmt->prepare($sql)) {
+    die("SQL error: " . $mysqli->error);
+};
+
+$stmt->bind_param("ss",
+                    $_POST["signupUsername"],
+                    $password_hash);
+
+if ($stmt->execute()) {
+
+    echo "Signup Complete";
+} 
+#else {
+   # die($mysqli->error . " " . $mysqli->errno);
+#}
+
 ?>
