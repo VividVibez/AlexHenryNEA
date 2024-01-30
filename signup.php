@@ -4,10 +4,6 @@ if (empty($_POST["signupUsername"])) {
    die("Name is required");
 }
 
-#if (strlen($_POST["signupPassword"]) < 12) {
- #  die("Password must be at least 10 characters");
-#}
-
 // Given password
 $password = $_POST["signupPassword"];
 
@@ -30,7 +26,7 @@ if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password)
 
 $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-$mysqli = require __DIR__ . "/database.php";
+$mysqli =  require __DIR__ . "/database.php";
 
 $sql = "INSERT INTO user (username, password_hash)
         VALUES (?,?)";
@@ -49,8 +45,8 @@ if ($stmt->execute()) {
 
     echo "Signup Complete";
 } 
-#else {
-   # die($mysqli->error . " " . $mysqli->errno);
-#}
+else {
+   die($mysqli->error . " " . $mysqli->errno);
+}
 
 ?>
