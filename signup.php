@@ -10,7 +10,7 @@ $password = $_POST["signupPassword"];
 // Validate password and confirm password match
 
 if ($password !== $_POST["signupPasswordConfirm"]) {
-   die("Passwords must match");
+   die("Passwords must match" . "<br>\n");
 }
 
 
@@ -18,9 +18,9 @@ if ($password !== $_POST["signupPasswordConfirm"]) {
 // Username must be 10 chars long
 
 if (strlen($username) < 8) {
-    die ("Username must be 10 characters");
+    die ("Username must be 10 characters" . "<br>\n");
 } else {
-    echo 'Strong Username';
+    echo "Strong Username" . "<br>\n";
 }
 
 // Validate password strength
@@ -34,9 +34,9 @@ $specialChars = preg_match('@[^\w]@', $password);
 // Return password requirments if password doesnt meet them. Return 'Strong password' if requirments are met
 
 if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
-    echo 'Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.';
+    echo 'Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.' . "<br>\n";
 }else{
-    echo 'Strong password';
+    echo 'Strong password' . "<br>\n";
 }
 
 
@@ -76,10 +76,11 @@ if ( ! mysqli_stmt_prepare($stmt, $insert)) {
 $rs = mysqli_query($conn,$check);
 $data = mysqli_fetch_array($rs, MYSQLI_NUM);
 
-if ($data[0] > 1) {
+
+if ($data[0] >= 1) {
     
-    echo "User Already in Exists<br/>";
-    
+    echo "Username isn't avaliable"  . "<br>\n";
+
 } else {
 
     // Call bind param statment and specify type 
@@ -91,7 +92,7 @@ if ($data[0] > 1) {
     // Execute stmt and store username and password inside user table
 
     mysqli_stmt_execute($stmt);
-    echo "Signup Successful<br/>";
+    echo "Signup Successful" . "<br>\n";
 }
 
 ?>
