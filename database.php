@@ -12,9 +12,9 @@ $pword = "";
 
 try {
     $mysqli = new mysqli(hostname: $host,
-                username: $user,
-                password: $pword,
-                database: $dbname);
+                         username: $user,
+                         password: $pword,
+                         database: $dbname);
 }
 
 // Check for connection errors
