@@ -43,3 +43,16 @@ function userVerify($pw, $un) {
     }
 
 }
+
+
+// Run user verification function and inform user if they are logged in or not
+
+if (userVerify($password,$username) == TRUE) {
+
+    echo ("You are logged in");
+
+} else {
+
+    echo ("Username or Password are incorrect");
+
+}
