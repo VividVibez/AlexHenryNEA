@@ -67,13 +67,10 @@ if ( ! mysqli_stmt_prepare($stmt, $sql)) {
 }
 
 // Call bind param statment and specify type 
-echo $username;
-echo $password;
-echo $password_hash;
 
 mysqli_stmt_bind_param($stmt, "ss",
                        $username,
-                       $password);
+                       $password_hash);
 
 // Execute stmt and store username and password inside user table
 mysqli_stmt_execute($stmt);
