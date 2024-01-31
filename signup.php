@@ -34,7 +34,7 @@ $specialChars = preg_match('@[^\w]@', $password);
 // Return password requirments if password doesnt meet them. Return 'Strong password' if requirments are met
 
 if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
-    echo 'Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.' . "<br>\n";
+    die ("Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character." . "<br>\n");
 }else{
     echo 'Strong password' . "<br>\n";
 }
@@ -42,7 +42,7 @@ if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password)
 
 // Store hashed password
 
-$password_hash = password_hash($password, PASSWORD_DEFAULT);
+$password = password_hash($password, PASSWORD_DEFAULT);
 
 
 // Connect to database by calling 'database.php'
@@ -86,8 +86,8 @@ if ($data[0] >= 1) {
     // Call bind param statment and specify type 
 
     mysqli_stmt_bind_param($stmt, "ss",
-                       $username,
-                       $password_hash);
+                           $username,
+                           $password);
 
     // Execute stmt and store username and password inside user table
 
