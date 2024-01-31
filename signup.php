@@ -54,9 +54,29 @@ $conn =  require __DIR__ . "/database.php";
 // Using a prepared stmt because it makes code less vanurable to sql injection
 
 $sql = "INSERT INTO user (username, password_hash)
-        VALUES ($username, $password_hash)";
+        VALUES (?, ?)";
 
+// Pass in the statment as an argument to create a prepared statment object
 
+$stmt = mysqli_stmt_init($conn);
+
+// Check for errors in sql and prepare stmt and sql
+
+if ( ! mysqli_stmt_prepare($stmt, $sql)) {
+    die(mysqli_error($conn));
+}
+
+// Call bind param statment and specify type 
+echo $username;
+echo $password;
+echo $password_hash;
+
+mysqli_stmt_bind_param($stmt, "ss",
+                       $username,
+                       $password);
+
+// Execute stmt and store username and password inside user table
+mysqli_stmt_execute($stmt);
 
 echo "Signup Sucessful";
 ?>
