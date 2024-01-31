@@ -1,5 +1,5 @@
 <?php
-
+ 
 // Store username 
 // Store password
 
@@ -22,7 +22,6 @@ if (strlen($username) < 8) {
 } else {
     echo 'Strong Username';
 }
-
 
 // Validate password strength
 // Password must contain a capital and lowercase letter, special char and number
@@ -50,11 +49,17 @@ $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
 $conn =  require __DIR__ . "/database.php";
 
-// Setup prepared statement
+// Setup prepared statements
+// Check will see if username is already taken
+// Insert will store the username and password hash in table
 // Using a prepared stmt because it makes code less vanurable to sql injection
 
-$sql = "INSERT INTO user (username, password_hash)
-        VALUES (?, ?)";
+$check = "SELECT COUNT(*) 
+          FROM user 
+          WHERE username = '$username'";
+
+$insert = "INSERT INTO user (username, password_hash)
+           VALUES (?, ?)";
 
 // Pass in the statment as an argument to create a prepared statment object
 
@@ -62,18 +67,31 @@ $stmt = mysqli_stmt_init($conn);
 
 // Check for errors in sql and prepare stmt and sql
 
-if ( ! mysqli_stmt_prepare($stmt, $sql)) {
+if ( ! mysqli_stmt_prepare($stmt, $insert)) {
     die(mysqli_error($conn));
 }
 
-// Call bind param statment and specify type 
+// Check is username isn't taken
 
-mysqli_stmt_bind_param($stmt, "ss",
+$rs = mysqli_query($conn,$check);
+$data = mysqli_fetch_array($rs, MYSQLI_NUM);
+
+if ($data[0] > 1) {
+    
+    echo "User Already in Exists<br/>";
+    
+} else {
+
+    // Call bind param statment and specify type 
+
+    mysqli_stmt_bind_param($stmt, "ss",
                        $username,
                        $password_hash);
 
-// Execute stmt and store username and password inside user table
-mysqli_stmt_execute($stmt);
+    // Execute stmt and store username and password inside user table
 
-echo "Signup Sucessful";
+    mysqli_stmt_execute($stmt);
+    echo "Signup Successful<br/>";
+}
+
 ?>
