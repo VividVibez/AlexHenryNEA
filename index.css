@@ -1,119 +1,124 @@
+/* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+/* Global Styles */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", "sans-serif";
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    box-sizing: border-box; /* Set box-sizing to border-box for all elements */
+    font-family: "Poppins", "sans-serif"; /* Set default font family to Poppins */
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-image: url(images/indeximg.avif);
-    background-position: center;
-    background-size: cover;
+    display: flex; /* Use flexbox layout */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    min-height: 100vh; /* Set minimum height to full viewport height */
+    background-image: url(images/indeximg.avif); /* Set background image */
+    background-position: center; /* Center the background image */
+    background-size: cover; /* Cover the entire viewport with the background image */
 }
 
-
+/* Wrapper Styles */
 .wrapper {
-    width: 420px;
-    background: transparent;
-    color: #fff;
-    border-radius: 10px;
-    padding: 30px 40px;
+    width: 420px; /* Set width of wrapper */
+    background: transparent; /* Set background color to transparent */
+    color: #fff; /* Set text color to white */
+    border-radius: 10px; /* Apply border radius */
+    padding: 30px 40px; /* Add padding inside wrapper */
 }
 
 .wrapper h1 {
-    font-size: 36px;
-    text-align: center;
+    font-size: 36px; /* Set font size for heading */
+    text-align: center; /* Center-align heading */
 }
 
+/* Input Box Styles */
 .wrapper .input-box {
-    position: relative;
-    width: 100%;
-    height: 50px;
-    margin: 30px 0;
+    position: relative; /* Set position to relative */
+    width: 100%; /* Set width to 100% */
+    height: 50px; /* Set height of input box */
+    margin: 30px 0; /* Add margin */
 }
 
 .input-box input {
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    border: none;
-    outline: none;
-    border: 2px solid rgba(255,255,255,2);
-    border-radius: 40px;
-    font-size: 16px;
-    color: #fff;
-    padding: 20px 45px 20px 20px;
+    width: 100%; /* Set width to 100% */
+    height: 100%; /* Set height to 100% */
+    background: transparent; /* Set background color to transparent */
+    border: none; /* Remove border */
+    outline: none; /* Remove outline */
+    border: 2px solid rgba(255,255,255,2); /* Add border with white color */
+    border-radius: 40px; /* Apply border radius */
+    font-size: 16px; /* Set font size */
+    color: #fff; /* Set text color to white */
+    padding: 20px 45px 20px 20px; /* Add padding */
 }
 
 .input-box input::placeholder {
-    color: #fff;
+    color: #fff; /* Set placeholder text color to white */
 }
 
 .input-box i {
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 20px;
+    position: absolute; /* Set position to absolute */
+    right: 20px; /* Align icon to right */
+    top: 50%; /* Align icon vertically */
+    transform: translateY(-50%); /* Center-align icon vertically */
+    font-size: 20px; /* Set font size for icon */
 }
 
+/* Remember Me Styles */
 .wrapper .remember-me {
-    display: flex;
-    justify-content: space-between;
-    font-size: 14.5px;
-    margin: -15px 0 15px;
+    display: flex; /* Use flexbox layout */
+    justify-content: space-between; /* Distribute items evenly */
+    font-size: 14.5px; /* Set font size */
+    margin: -15px 0 15px; /* Add margin */
 }
 
 .remember-me label input {
-    accent-color: #fff;
-    margin-right: 3px;
+    accent-color: #fff; /* Set accent color to white */
+    margin-right: 3px; /* Add margin */
 }
 
 .remember-me a {
-    color: #fff;
-    text-decoration: none;
+    color: #fff; /* Set text color to white */
+    text-decoration: none; /* Remove underline */
 }
 
 .remember-me a:hover {
-    text-decoration: underline;
+    text-decoration: underline; /* Underline on hover */
 }
 
+/* Button Styles */
 .wrapper .button {
-    width: 100%;
-    height: 45px;
-    background: #fff;
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
-    cursor: pointer;
-    font-size: 16px;
-    color: #333;
-    font-weight: 600;
+    width: 100%; /* Set width to 100% */
+    height: 45px; /* Set height of button */
+    background: #fff; /* Set background color */
+    border: none; /* Remove border */
+    outline: none; /* Remove outline */
+    border-radius: 40px; /* Apply border radius */
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1); /* Add box shadow */
+    cursor: pointer; /* Set cursor to pointer */
+    font-size: 16px; /* Set font size */
+    color: #333; /* Set text color */
+    font-weight: 600; /* Set font weight */
 }
 
+/* Register Styles */
 .wrapper .register {
-    font-size: 14.5px;
-    text-align: center;
-    margin-top: 20px;
+    font-size: 14.5px; /* Set font size */
+    text-align: center; /* Center-align text */
+    margin-top: 20px; /* Add margin */
 }
 
 .register a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-    border: none;
-    margin-left: 5px;
-    cursor: pointer;
+    color: #fff; /* Set text color to white */
+    text-decoration: none; /* Remove underline */
+    font-weight: 600; /* Set font weight */
+    border: none; /* Remove border */
+    margin-left: 5px; /* Add margin */
+    cursor: pointer; /* Set cursor to pointer */
 }
 
 .register a:hover {
-    text-decoration: underline;
+    text-decoration: underline; /* Underline on hover */
 }
-

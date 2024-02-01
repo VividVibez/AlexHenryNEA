@@ -4,35 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Analyst</title>
-    <link rel="stylesheet" href="index.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <script src="index.js" defer></script>
+    <link rel="stylesheet" href="index.css"> <!-- Link to external CSS file -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> <!-- Link to external boxicons CSS file -->
+    <script src="index.js" defer></script> <!-- Link to external JavaScript file with 'defer' attribute for asynchronous loading -->
 </head>
 <body>
     <div class="wrapper">
 
         <h1>Register</h1>
+        <!-- Form for user registration -->
         <form  class="signup" action="signup.php" method="post" novalidate>
 
+            <!-- Input field for username -->
             <div class="input-box">
                 <input type="text"  placeholder="Username" id="signupUsername" name="signupUsername">
-                <i class='bx bxs-user'></i>
+                <i class='bx bxs-user'></i> <!-- Icon for username input -->
             </div>
 
+            <!-- Input field for password -->
             <div class="input-box">
                 <input type="password"  placeholder="Password" id="signupPassword" name="signupPassword">
-                <i class='bx bxs-lock-alt'></i>
+                <i class='bx bxs-lock-alt'></i> <!-- Icon for password input -->
             </div>        
 
+            <!-- Input field for confirming password -->
             <div class="input-box">
                 <input type="password"  placeholder="Confirm Password" id="signupPasswordConfirm" name="signupPasswordConfirm">
-                <i class='bx bxs-lock-alt'></i>
+                <i class='bx bxs-lock-alt'></i> <!-- Icon for password confirmation input -->
             </div>        
 
+            <!-- Button to submit the form -->
             <button type="submit" class="button">Sign Up</button>
 
+            <!-- Link to login page for existing users -->
             <div class="register">
-                <p>Already have an account?<a href="index.html">Login</button></p>
+                <p>Already have an account?<a href="index.html">Login</a></p> <!-- Link to login page -->
             </div>
         </form> 
     </div>
