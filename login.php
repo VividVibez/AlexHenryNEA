@@ -67,7 +67,7 @@ function userVerify($pw, $un) {
 
 if (userVerify($password,$username) == TRUE) {
 
-    echo ("You are logged in");
+    header("location: /Main/main.php");
 
 } else {
 
