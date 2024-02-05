@@ -122,3 +122,7 @@ body {
 .register a:hover {
     text-decoration: underline; /* Underline on hover */
 }
+
+.alert {
+    color: aqua;
+}
