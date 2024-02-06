@@ -62,32 +62,6 @@ if (isset($_SESSION["usr"])) {
                     // Re-hash password for consistency with stored hashed passwords in the database
                     $password = password_hash($password, PASSWORD_DEFAULT);
 
-                    // Function to check if user exists
-                    function userVerify($pw, $un) {
-                        // Connect to database by including 'database.php'
-                        $conn = require __DIR__ . "/database.php";
-
-                        // Setup SQL to check if username and password are in the database
-                        $check = sprintf("SELECT password_hash
-                        FROM user
-                        WHERE username = '%s'",
-                        $conn->real_escape_string($un));
-
-                        // Check user exists
-                        // Run check SQL statement
-                        $rs = mysqli_query($conn, $check);
-                        // Count every time the SQL statement finds a value and store it in data array
-                        $data = mysqli_fetch_array($rs, MYSQLI_NUM);
-                        // Check if the data array has any values
-                        if (!$data) {
-                            // User doesn't exist
-                            return FALSE;
-                        } else {
-                            // User exists
-                            return TRUE;
-                        }
-                    }
-
                     // Run user verification function and inform user if they are logged in or not
                     if (userVerify($password, $username) == TRUE) {
                         $_SESSION["usr"] = $username;
