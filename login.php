@@ -1,5 +1,10 @@
 <?php
 session_start();
+include 'functions.php';
+if (isset($_SESSION["usr"])) {
+    header("location: question1.php");
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
