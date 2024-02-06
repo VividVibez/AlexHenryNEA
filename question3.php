@@ -1,6 +1,11 @@
 <?php
 session_start();
 include 'functions.php';
+
+if (!isset($_SESSION["usr"])) {
+    header("location: login.php");
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,10 +16,22 @@ include 'functions.php';
     
     <link href='css/checkbox.css' rel='stylesheet'>
     <link href='css/questions.css' rel='stylesheet'>
-
+    <link href='css/logoutBtn.css' rel='stylesheet'>
 </head>
 </head>
 <body>
+    <div class="logout">
+        <form method="post">
+            <input type="submit" name="logout" class="logoutBtn" value="Logout">
+        </form>
+    </div>
+    <?php
+    if(array_key_exists('logout', $_POST)) { 
+        unset($_SESSION["usr"]);
+        header("location: login.php");
+    } 
+    ?>
+
     <div class="wrapper">
 
         <div class="hero">
@@ -25,19 +42,13 @@ include 'functions.php';
         <div class="question">  
                 <form oninput="output.value = Math.round(range.valueAsNumber / 1000)" method="post">
 
-                    <h2 class="center">What is your avaliability?</h2>
-                
-                    <div>
-                    <div class="box">
-                        <input id="one" type="checkbox">
-                        <span class="check"></span>
-                        <label for="one">Check me.</label>
-                    </div>
-                    <div class="box">
-                        <input id="two" type="checkbox">
-                        <span class="check"></span>
-                        <label for="two">Hey! Check me too.</label>
-                    </div>
+                    <h2 class="center">Whats is your avaliability? (Days a Week)</h2>
+
+                    <div class="range-input">
+                        <input type="range" min="0" max="7" value="0" step="1" id="ava" name ="ava">
+                        <div class="value">
+                          <div></div>
+                        </div>
                     </div>
 
                     <button class="btn" type="submit">Confirm</button>
@@ -46,9 +57,9 @@ include 'functions.php';
                     // Check if form is submitted
                     if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         
-                        if (isset($_POST["focus"])) {
-                            savequestion($_SESSION["usr"],"focus",$_POST["focus"]);
-                            header("location: question3.php");
+                        if (isset($_POST["ava"])) {
+                            savequestion($_SESSION["usr"],"availability",$_POST["ava"]);
+                            header("location: home.php");
                         }
                     }
                     ?>

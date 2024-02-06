@@ -1,6 +1,10 @@
 <?php
 session_start();
 include 'functions.php';
+
+if (!isset($_SESSION["usr"])) {
+    header("location: login.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,9 +13,22 @@ include 'functions.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Setup</title>
     <link href='css/questions.css' rel='stylesheet'>
+    <link href='css/logoutBtn.css' rel='stylesheet'>
 </head>
 </head>
 <body>
+    <div class="logout">
+        <form method="post">
+            <input type="submit" name="logout" class="logoutBtn" value="Logout">
+        </form>
+    </div>
+    <?php
+    if(array_key_exists('logout', $_POST)) { 
+        unset($_SESSION["usr"]);
+        header("location: login.php");
+    } 
+    ?>
+
     <div class="wrapper">
 
         <div class="hero">
