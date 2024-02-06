@@ -1,4 +1,6 @@
-
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,9 +85,11 @@
 
                     // Run user verification function and inform user if they are logged in or not
                     if (userVerify($password, $username) == TRUE) {
+                        $_SESSION["usr"] = $username;
                         // Redirect user to main page if login is successful
                         $url = "question1.php";
                         header("location:" . $url);
+                        end;
                     } else {
                         // Display error message if username or password are incorrect
                         echo "<div class='alert'>Username or Password are incorrect</div>";
