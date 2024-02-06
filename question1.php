@@ -1,10 +1,14 @@
+<?php
+session_start();
+include 'functions.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Setup</title>
-    <link href='questions.css' rel='stylesheet'>
+    <link href='css/questions.css' rel='stylesheet'>
 </head>
 </head>
 <body>
@@ -32,8 +36,9 @@
                     <?php
                     // Check if form is submitted
                     if ($_SERVER["REQUEST_METHOD"] === "POST") {
-                        // Check if loginUsername and loginPassword are set in $_POST
+                        
                         if (isset($_POST["exp"])) {
+                            savequestion($_SESSION["usr"],"experience",$_POST["exp"]);
                             header("location: question2.php");
                         }
                     }

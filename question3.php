@@ -8,7 +8,10 @@ include 'functions.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Setup</title>
+    
+    <link href='css/checkbox.css' rel='stylesheet'>
     <link href='css/questions.css' rel='stylesheet'>
+
 </head>
 </head>
 <body>
@@ -22,14 +25,19 @@ include 'functions.php';
         <div class="question">  
                 <form oninput="output.value = Math.round(range.valueAsNumber / 1000)" method="post">
 
-                    <h2 class="center">What is your focus?</h2>
-                    <p>1 - Climbing , 5 - Powerlifting</p>
-
-                    <div class="range-input">
-                        <input type="range" min="0" max="5" value="0" step="1" id="focus" name ="focus">
-                        <div class="value">
-                          <div></div>
-                        </div>
+                    <h2 class="center">What is your avaliability?</h2>
+                
+                    <div>
+                    <div class="box">
+                        <input id="one" type="checkbox">
+                        <span class="check"></span>
+                        <label for="one">Check me.</label>
+                    </div>
+                    <div class="box">
+                        <input id="two" type="checkbox">
+                        <span class="check"></span>
+                        <label for="two">Hey! Check me too.</label>
+                    </div>
                     </div>
 
                     <button class="btn" type="submit">Confirm</button>
