@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 * {
   margin: 0; /* Remove default margin */
   padding: 0; /* Remove default padding */
@@ -28,20 +30,39 @@ body {
 
 /* Wrapper Styles */
 .wrapper {
-  width: 50%; /* Set width of wrapper */
-  background: transparent; /* Set background color to transparent */
+  display: flex;
+  flex-direction: column;
+  width: 30%; /* Set width of wrapper */
   color: #fff; /* Set text color to white */
   border-radius: 10px; /* Apply border radius */
-  padding: 30px 40px; /* Add padding inside wrapper */
+  padding: 40px 40px; /* Add padding inside wrapper */
+  background-color: blue;
+  height: 60vh;
+  align-items: center;
+  justify-content: center;
+  place-content: space-between;
 }
 
 .hero{
-  margin-bottom: 2em;
   text-align: center;
 }
+.question {
+  justify-content: center;
+}
+.hero h1 {
+  margin-bottom: 2vh;
+}
 
+.question h2 {
+  margin-bottom: 4vh
+}
+.question .range-input {
+  margin-bottom: 4vh;
+}
 .range-input {
-    margin: 2vh 0 2vh 28%;
+    margin: auto;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
     width: 18em;
     background:#eee;
     padding:10px 10px;
@@ -100,8 +121,7 @@ body {
     font-size: 16px; /* Set font size */
     color: #333; /* Set text color */
     font-weight: 600; /* Set font weight */
-    margin: 0 0 0 43%;
-    
+    margin-left: 40%;
     
 }
 
