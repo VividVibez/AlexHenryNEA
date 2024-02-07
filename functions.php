@@ -60,23 +60,19 @@ function userVerify($pw, $un) {
     $conn = require __DIR__ . "/database.php";
 
     // Setup SQL to check if username and password are in the database
-    $check = sprintf("SELECT password_hash
+    $check = "SELECT 'password_hash'
     FROM user
-    WHERE username = '%s'",
-    $conn->real_escape_string($un));
-
+    WHERE username = '$un'";
     // Check user exists
     // Run check SQL statement
     $rs = mysqli_query($conn, $check);
-    // Count every time the SQL statement finds a value and store it in data array
-    $data = mysqli_fetch_array($rs, MYSQLI_NUM);
-    // Check if the data array has any values
-    if (!$data) {
-        // User doesn't exist
-        return FALSE;
-    } else {
-        // User exists
+    print_r($rs);
+    if (password_verify($un,$rs)) {
+        
         return TRUE;
+    } else {
+        
+        return FALSE;
     }
 }
 ?>
