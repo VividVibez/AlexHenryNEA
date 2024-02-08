@@ -1,0 +1,71 @@
+{
+    "fingers": [
+       {
+            "exercise":"hangs",
+            "equipment": "hangboard",
+            "difficulty": "2"
+        },
+       {
+            "exercise":"edge lifts",
+            "equipment": "pinch block",
+            "difficulty": "0"
+        },
+        {
+            "exercise":"pinch block",
+            "equipment": "pinch block",
+            "difficulty": "0"
+        }
+    ],
+    "pulling": [
+        {
+            "exercise":"pull ups",
+            "equipment": "Bar",
+            "difficulty": "2"
+        },
+        {
+            "exercise":"muscle ups",
+            "equipment": "Bar",
+            "difficulty": "3"
+        },
+        {
+            "exercise":"lock off",
+            "equipment": "Bar",
+            "difficulty": "4"
+        }
+    ],
+    "climbing easy": [
+        {
+            "exercise":"milleage climbing",
+            "equipment": "wall",
+            "difficulty": "1"
+        },
+        {
+            "exercise":"repeating",
+            "equipment": "wall",
+            "difficulty": "1"
+        },
+        {
+            "exercise":"easy climbing",
+            "equipment": "wall",
+            "difficulty": "0"
+        }
+    ],
+    "climbing hard": [
+        {
+            "exercise":"milleage climbing",
+            "equipment": "wall",
+            "difficulty": "1"
+        },
+        {
+            "exercise":"repeating",
+            "equipment": "wall",
+            "difficulty": "1"
+        },
+        {
+            "exercise":"easy climbing",
+            "equipment": "wall",
+            "difficulty": "0"
+        }
+
+    ]
+}
