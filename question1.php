@@ -38,10 +38,10 @@ if (!isset($_SESSION["usr"])) {
         <div class="question">  
                 <form oninput="output.value = Math.round(range.valueAsNumber / 1000)" method="post">
 
-                    <h2>How long have you trained previously?</h2>
+                    <h2>What Bouldering Grade is your highest achieved in the last 2 years?</h2>
 
                     <div class="range-input">
-                        <input type="range" min="0" max="10" value="0" step="1" id="exp" name ="exp">
+                        <input type="range" min="0" max="17" value="0" step="1" id="grade" name ="grade">
                         <div class="value">
                           <div></div>
                         </div>
@@ -53,8 +53,8 @@ if (!isset($_SESSION["usr"])) {
                     // Check if form is submitted
                     if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         
-                        if (isset($_POST["exp"])) {
-                            savequestion($_SESSION["usr"],"experience",$_POST["exp"]);
+                        if (isset($_POST["grade"])) {
+                            savequestion($_SESSION["usr"],"grade",$_POST["grade"]);
                             header("location: question2.php");
                         }
                     }
