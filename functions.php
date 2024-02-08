@@ -60,14 +60,16 @@ function userVerify($pw, $un) {
     $conn = require __DIR__ . "/database.php";
 
     // Setup SQL to check if username and password are in the database
-    $check = "SELECT 'password_hash'
+    $check = "SELECT *
     FROM user
     WHERE username = '$un'";
     // Check user exists
     // Run check SQL statement
     $rs = mysqli_query($conn, $check);
-    print_r($rs);
-    if (password_verify($un,$rs)) {
+    $row = mysqli_fetch_assoc($rs);
+    $name = $row['password_hash'];
+
+    if (password_verify($pw,$name)) {
         
         return TRUE;
     } else {
