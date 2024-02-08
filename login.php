@@ -11,8 +11,8 @@ if (isset($_SESSION["usr"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Analyst</title>
-    <link rel="stylesheet" href="index.css"> <!-- Link to external CSS file -->
+    <title>I Climb</title>
+    <link rel="stylesheet" href="css/index.css"> <!-- Link to external CSS file -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> <!-- Link to external boxicons CSS file -->
     <script src="index.js" defer></script> <!-- Link to external JavaScript file with 'defer' attribute for asynchronous loading -->
 </head>
@@ -59,8 +59,9 @@ if (isset($_SESSION["usr"])) {
                     $username = strtolower($_POST["loginUsername"]); // Convert username to lowercase for consistency
                     $password = $_POST["loginPassword"];
 
-                    // Re-hash password for consistency with stored hashed passwords in the database
-                    $password = password_hash($password, PASSWORD_DEFAULT);
+                    if (empty($username) && empty($password)) {
+                        die ("Please provide both username and password.");
+                    }
 
                     // Run user verification function and inform user if they are logged in or not
                     if (userVerify($password, $username) == TRUE) {
