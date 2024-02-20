@@ -37,27 +37,9 @@ print_r(getInfo($_SESSION["usr"]))
 
   <section class="days">
     <div class="container">
-      <div class="day1">
-
-      </div>
-      <div class="day2">
-
-      </div>
-      <div class="day3">
-
-      </div>
-      <div class="day4">
-
-      </div>
-      <div class="day5">
-
-      </div>
-      <div class="day6">
-
-      </div>
-      <div class="day7">
-
-      </div>
+      <?php
+      getInfo($_SESSION["usr"]);
+      ?>
     </div>
   </section>
 </main>
