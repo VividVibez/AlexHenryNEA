@@ -44,6 +44,11 @@ function getInfo($un) {
     $focus = $row['focus'];
     $grade = $row['grade']; 
     $days = $row['vacancy'];
+    $bar = $row['bar'];
+    $block = $row['block'];
+    $wall = $row['wall'];
+
+    $equipment = array($bar, $block, $wall);
 
     // Create an instance of the Info class and populate it with user information
     $out = new Info(); 
