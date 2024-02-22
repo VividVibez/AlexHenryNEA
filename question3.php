@@ -13,8 +13,6 @@ if (!isset($_SESSION["usr"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Setup</title>
-    
-    <link href='css/checkbox.css' rel='stylesheet'>
     <link href='css/questions.css' rel='stylesheet'>
     <link href='css/logoutBtn.css' rel='stylesheet'>
 </head>
@@ -59,7 +57,7 @@ if (!isset($_SESSION["usr"])) {
                         
                         if (isset($_POST["ava"])) {
                             savequestion($_SESSION["usr"],"vacancy",$_POST["ava"]);
-                            header("location: myPlan.php");
+                            header("location: question4.php");
                         }
                     }
                     ?>
