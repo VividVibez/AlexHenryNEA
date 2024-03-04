@@ -14,7 +14,7 @@ body {
     justify-content: center; /* Center content horizontally */
     align-items: center; /* Center content vertically */
     min-height: 100vh; /* Set minimum height to full viewport height */
-    background-image: url(images/indeximg.avif); /* Set background image */
+    background-image: url(images\indeximg.avif); /* Set background image */
     background-position: center; /* Center the background image */
     background-size: cover; /* Cover the entire viewport with the background image */
 }
