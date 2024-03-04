@@ -127,7 +127,7 @@ class ClimbingTrainingPlan
 }
 
 // Assuming the inputs are already collected and stored in variables
-$exercisesJson = file_get_contents('exercises.json');
+$exercisesJson = file_get_contents('exercise_directory.json');
 $exercises = json_decode($exercisesJson, true);
 $trainingDays = 5; // Example value, replace with actual value
 $climbingGrade = 4; // Example value, replace with actual value
