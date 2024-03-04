@@ -1,114 +1,140 @@
 <?php
 
-// Function to retrieve exercises from a JSON file based on type
-function getExercises($type) {
-    $path = 'exercise_directory.json'; // Path to the JSON file
-    $jsonString = file_get_contents($path); // Read the JSON file as a string
-    $jsonData = json_decode($jsonString, true); // Decode the JSON string into an associative array
+class ClimbingTrainingPlan
+{
+    private $exercises;
+    private $trainingDays;
+    private $climbingGrade;
+    private $focus;
+    private $maxTrainingDays = 5;
+    private $maxStrengthTrainingDaysPerWeek = 3;
+    private $minGradeForHangboard = 3;
+    private $restDaysFrequency = 2; // Rest every 2 days
+    private $intensityIncrement = 0.5; // Intensity increment based on climbing grade
+    private $progressFilePath = 'progress.json';
 
-    $exercises = $jsonData[$type]; // Retrieve exercises based on the provided type
-
-    return $exercises; // Return the array of exercises
-}
-
-// Function to retrieve an exercise based on type, equipment, and difficulty
-function getExercise($type, $equip, $dif) {
-    $exercises = getExercises($type); // Retrieve exercises of the specified type
-    // Logic for retrieving an exercise based on equipment and difficulty can be added here
-}
-
-// Class definition for storing user information
-class Info {
-    public $f; // Focus
-    public $g; // Grade
-    public $d; // Days
-}
-
-// Function to retrieve user information from the database
-function getInfo($un) {
-    // Connect to the database
-    $conn = require __DIR__ . "/database.php";
-
-    // SQL query to retrieve user information based on username
-    $check = "SELECT *
-    FROM basic_info
-    WHERE username = '$un'";
-
-    // Execute the SQL query
-    $rs = mysqli_query($conn, $check);
-
-    // Fetch the row of data as an associative array
-    $row = mysqli_fetch_assoc($rs);
-
-    // Extract relevant information from the database row
-    $focus = $row['focus'];
-    $grade = $row['grade']; 
-    $days = $row['vacancy'];
-    $bar = $row['bar'];
-    $block = $row['block'];
-    $wall = $row['wall'];
-
-    $equipment = array($bar, $block, $wall);
-
-    // Create an instance of the Info class and populate it with user information
-    $out = new Info(); 
-    $out->f = $focus;
-    $out->g = $grade;
-    $out->d = $days;
-    
-    return $out; // Return the Info object
-}
-
-// Retrieve user information
-$i = getInfo($un);
-$f = $i->f; // User's focus
-$g = $i->g; // User's grade
-$d = $i->d; // User's available days
-
-// Function to generate training plan for phase 1
-function phase1($f, $g, $d) {
-
-    // Phase 1: 3 Weeks of low volume strength training or technique
-
-    // Limit the number of available days for training to 5
-    if ($d > 5) {
-        $d = 5;
+    public function __construct($exercises, $trainingDays, $climbingGrade, $focus)
+    {
+        $this->exercises = $exercises;
+        $this->trainingDays = min($trainingDays, $this->maxTrainingDays);
+        $this->climbingGrade = $climbingGrade;
+        $this->focus = $focus;
     }
 
-    // Determine if climbing board is available
-    if ($g >= 7) {
-        $board = true;
-        // Determine strength training days based on user's focus
-        if ($f == 1) {
-            $strength_days = 3;
-        } elseif ($f == 2 || $f == 3) {
-            $strength_days = 2;
-        } elseif ($f == 4) {
-            $strength_days = 1;
-        } else {
-            $strength_days = 0;
+    public function generateTrainingPlan()
+    {
+        // Load progress data
+        $progressData = $this->loadProgressData();
+
+        // Adjust intensity based on climbing grade
+        $adjustedIntensity = $this->adjustIntensity($this->climbingGrade);
+
+        // Filter and adjust exercises based on focus, grade, and previous progress
+        $filteredExercises = $this->filterExercises();
+        $adjustedExercises = $this->adjustExercises($filteredExercises, $adjustedIntensity, $progressData);
+
+        // Shuffle exercises
+        shuffle($adjustedExercises);
+
+        // Calculate exercises per day
+        $exercisesPerDay = ceil(count($adjustedExercises) / $this->trainingDays);
+
+        // Generate training plan
+        $trainingPlan = [];
+        $day = 1;
+        $strengthTrainingDays = 0;
+
+        foreach ($adjustedExercises as $exercise) {
+            if (!isset($trainingPlan["Day $day"])) {
+                $trainingPlan["Day $day"] = [];
+            }
+
+            // Check if the maximum number of strength training days per week is reached
+            if ($exercise['type'] == 'strength') {
+                if ($strengthTrainingDays >= $this->maxStrengthTrainingDaysPerWeek) {
+                    continue;
+                }
+                $strengthTrainingDays++;
+            }
+
+            $trainingPlan["Day $day"][] = $exercise;
+
+            // Move to the next day if the exercises per day limit is reached
+            if (count($trainingPlan["Day $day"]) >= $exercisesPerDay) {
+                $day++;
+                $strengthTrainingDays = 0;
+            }
+
+            // Break the loop if the maximum number of training days is reached
+            if ($day > $this->trainingDays) {
+                break;
+            }
         }
-    } else {
-        $board = false;
-        // Determine strength training days based on user's focus
-        if ($f == 1 || $f == 2) {
-            $strength_days = 2;
-        } elseif ($f == 3 || $f == 4) {
-            $strength_days = 1;
-        } else {
-            $strength_days = 0;
-        }
+
+        return $trainingPlan;
     }
 
-    // Assign training routines based on the number of strength training days
-    if ($strength_days == 1) {
-        // 1 training day that targets climbing specific components
-    } elseif ($strength_days == 2) {
-        // 2 Training days that target climbing specific components and some conditioning
-    } else {
-        // 2 Training days that target climbing specific components 
-        // 1 Day that targets conditioning and light climbing components
+    private function filterExercises()
+    {
+        $filteredExercises = [];
+        foreach ($this->exercises as $exercise) {
+            // Check if the exercise type matches the focus
+            if (($this->focus == 1 && $exercise['type'] == 'strength')
+                || ($this->focus == 5 && $exercise['type'] == 'technique')
+                || ($this->focus >= 2 && $this->focus <= 4)) {
+                $filteredExercises[] = $exercise;
+            }
+        }
+
+        // Filter exercises based on climber's grade and constraints
+        $filteredExercises = array_filter($filteredExercises, function ($exercise) {
+            // Check if the climber's grade allows hangboard exercises
+            if ($exercise['equipment'] == 'Hangboard' && $this->climbingGrade < $this->minGradeForHangboard) {
+                return false;
+            }
+            // Add more grade-based filters if needed
+            return true;
+        });
+
+        return $filteredExercises;
+    }
+
+    private function adjustIntensity($grade)
+    {
+        // Adjust intensity based on climbing grade
+        return max(1, $grade * $this->intensityIncrement);
+    }
+
+    private function adjustExercises($exercises, $intensity, $progressData)
+    {
+        // Adjust exercises based on intensity and previous progress
+        // For simplicity, this function can be further expanded
+        // based on specific criteria and algorithms for adjusting exercises
+
+        // For now, just return the filtered exercises
+        return $exercises;
+    }
+
+    private function loadProgressData()
+    {
+        // Load progress data from file
+        if (file_exists($this->progressFilePath)) {
+            $progressData = file_get_contents($this->progressFilePath);
+            return json_decode($progressData, true);
+        }
+        return [];
     }
 }
 
+// Assuming the inputs are already collected and stored in variables
+$exercisesJson = file_get_contents('exercises.json');
+$exercises = json_decode($exercisesJson, true);
+$trainingDays = 5; // Example value, replace with actual value
+$climbingGrade = 4; // Example value, replace with actual value
+$focus = 3; // Example value, replace with actual value
+
+$trainingPlanGenerator = new ClimbingTrainingPlan($exercises, $trainingDays, $climbingGrade, $focus);
+$trainingPlan = $trainingPlanGenerator->generateTrainingPlan();
+
+echo json_encode($trainingPlan, JSON_PRETTY_PRINT);
 ?>
