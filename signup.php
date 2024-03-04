@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Analyst</title>
+    <title>I Climb</title>
     <link rel="stylesheet" href="css/index.css"> <!-- Link to external CSS file -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> <!-- Link to external boxicons CSS file -->
     <script src="index.js" defer></script> <!-- Link to external JavaScript file with 'defer' attribute for asynchronous loading -->
