@@ -43,7 +43,7 @@ if (!isset($_SESSION["usr"])) {
                     <p>1 - Strength , 5 - Technique</p>
 
                     <div class="range-input">
-                        <input type="range" min="0" max="5" value="0" step="1" id="focus" name ="focus">
+                        <input type="range" min="1" max="5" value="0" step="1" id="focus" name ="focus">
                         <div class="value">
                           <div></div>
                         </div>
