@@ -7,10 +7,6 @@ include 'planMaker.php';
 if (!isset($_SESSION["usr"])) {
     header("location: login.php");
 }
-
-print_r(getInfo($_SESSION["usr"]))
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,8 +34,39 @@ print_r(getInfo($_SESSION["usr"]))
   <section class="days">
     <div class="container">
       <?php
-      getInfo($_SESSION["usr"]);
+      newPlan($_SESSION["usr"]);
+
+      
+      // JSON data containing the training plan
+      $json_data = newPlan($_SESSION["usr"]);
+
+      // Decode JSON data
+      $data = json_decode($json_data, true);
+
+      // Function to generate HTML for a single training day
+      function generateDayHTML($day, $exercises) {
+          $html = "<h3>$day</h3><ul>";
+          foreach ($exercises as $exercise) {
+              $name = $exercise['name'];
+              $equipment = $exercise['equipment'];
+              $difficulty = $exercise['difficulty'];
+              $type = $exercise['type'];
+              $html .= "<li>Name: $name | Equipment: $equipment | Difficulty: $difficulty | Type: $type</li>";
+          }
+          $html .= "</ul>";
+          return $html;
+      }
+
+      // Generate HTML for each training day
+      $html = '';
+      foreach ($data as $day => $exercises) {
+          $html .= generateDayHTML($day, $exercises);
+      }
+
+      // Display the HTML
+      echo $html;
       ?>
+
     </div>
   </section>
 </main>
