@@ -14,7 +14,7 @@
     {
       "name": "Climbing ladder",
       "equipment": "Climbing ladder",
-      "difficulty": 3,
+      "difficulty": 1,
       "type": "technique"
     },
     {
@@ -26,13 +26,13 @@
     {
       "name": "Moonboard climbing",
       "equipment": "Moonboard",
-      "difficulty": 5,
-      "type": "technique"
+      "difficulty": 6,
+      "type": "strength"
     },
     {
       "name": "Project Climbing",
       "equipment": "Climbing wall",
-      "difficulty": 5,
+      "difficulty": 4,
       "type": "technique"
     },
     {
@@ -42,15 +42,15 @@
       "type": "technique"
     },
     {
-        "name": "Dyno",
-        "equipment": "Climbing shoes",
-        "difficulty": 4,
+        "name": "Dyno Practice",
+        "equipment": "Climbing wall",
+        "difficulty": 5,
         "type": "technique"
     },
     {
         "name": "Lock-offs",
         "equipment": "None",
-        "difficulty": 3,
+        "difficulty": 6,
         "type": "strength"
     }
   ]
