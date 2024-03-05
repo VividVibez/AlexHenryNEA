@@ -8,9 +8,8 @@ class ClimbingTrainingPlan
     private $focus;
     private $maxTrainingDays = 5;
     private $maxStrengthTrainingDaysPerWeek = 3;
-    private $minGradeForHangboard = 3;
-    private $restDaysFrequency = 2; // Rest every 2 days
     private $intensityIncrement = 0.5; // Intensity increment based on climbing grade
+    private $maxExercisesPerDay = 3;
     private $progressFilePath = 'progress.json';
 
     public function __construct($exercises, $trainingDays, $climbingGrade, $focus)
@@ -33,42 +32,44 @@ class ClimbingTrainingPlan
         $filteredExercises = $this->filterExercises();
         $adjustedExercises = $this->adjustExercises($filteredExercises, $adjustedIntensity, $progressData);
 
-        // Shuffle exercises
-        shuffle($adjustedExercises);
-
         // Calculate exercises per day
         $exercisesPerDay = ceil(count($adjustedExercises) / $this->trainingDays);
+        if ($exercisesPerDay > $this->maxExercisesPerDay) {
+            $exercisesPerDay = $this->maxExercisesPerDay;
+        }
 
         // Generate training plan
         $trainingPlan = [];
-        $day = 1;
         $strengthTrainingDays = 0;
+        $usedExercises = []; // To track used exercises for each day
 
-        foreach ($adjustedExercises as $exercise) {
-            if (!isset($trainingPlan["Day $day"])) {
-                $trainingPlan["Day $day"] = [];
-            }
+        for ($day = 1; $day <= $this->trainingDays; $day++) {
+            $trainingPlan["Day $day"] = [];
 
-            // Check if the maximum number of strength training days per week is reached
-            if ($exercise['type'] == 'strength') {
-                if ($strengthTrainingDays >= $this->maxStrengthTrainingDaysPerWeek) {
+            foreach ($adjustedExercises as $exercise) {
+
+                // Shuffle exercises
+                shuffle($adjustedExercises);
+
+                // Check if the exercise has already been used on this day
+                if (in_array($exercise['name'], $usedExercises)) {
                     continue;
                 }
-                $strengthTrainingDays++;
+
+                // Check if the maximum number of strength training days per week is reached
+                if ($exercise['type'] == 'strength') {
+                    if ($strengthTrainingDays >= $this->maxStrengthTrainingDaysPerWeek) {
+                        continue;
+                    }
+                    $strengthTrainingDays++;
+                }
+
+                $trainingPlan["Day $day"][] = $exercise;
+                $usedExercises[] = $exercise['name'];
+
             }
 
-            $trainingPlan["Day $day"][] = $exercise;
-
-            // Move to the next day if the exercises per day limit is reached
-            if (count($trainingPlan["Day $day"]) >= $exercisesPerDay) {
-                $day++;
-                $strengthTrainingDays = 0;
-            }
-
-            // Break the loop if the maximum number of training days is reached
-            if ($day > $this->trainingDays) {
-                break;
-            }
+            $usedExercises = []; // Reset used exercises for the next day
         }
 
         return $trainingPlan;
@@ -88,8 +89,8 @@ class ClimbingTrainingPlan
 
         // Filter exercises based on climber's grade and constraints
         $filteredExercises = array_filter($filteredExercises, function ($exercise) {
-            // Check if the climber's grade allows hangboard exercises
-            if ($exercise['equipment'] == 'Hangboard' && $this->climbingGrade < $this->minGradeForHangboard) {
+            // Check if the climber's grade allows  exercises
+            if ($exercise['difficulty'] > $this->climbingGrade) {
                 return false;
             }
             // Add more grade-based filters if needed
@@ -126,15 +127,38 @@ class ClimbingTrainingPlan
     }
 }
 
-// Assuming the inputs are already collected and stored in variables
-$exercisesJson = file_get_contents('exercise_directory.json');
-$exercises = json_decode($exercisesJson, true);
-$trainingDays = 5; // Example value, replace with actual value
-$climbingGrade = 4; // Example value, replace with actual value
-$focus = 3; // Example value, replace with actual value
+function newPlan($un) {
 
-$trainingPlanGenerator = new ClimbingTrainingPlan($exercises, $trainingDays, $climbingGrade, $focus);
-$trainingPlan = $trainingPlanGenerator->generateTrainingPlan();
+    $exercisesJson = file_get_contents('exercise_directory.json');
+    $exercises = json_decode($exercisesJson, true);
 
-echo json_encode($trainingPlan, JSON_PRETTY_PRINT);
+    // Connect to the database
+    $conn = require __DIR__ . "/database.php";
+
+    // SQL query to retrieve user information based on username
+    $check = "SELECT *
+    FROM basic_info
+    WHERE username = '$un'";
+
+    // Execute the SQL query
+    $rs = mysqli_query($conn, $check);
+
+    // Fetch the row of data as an associative array
+    $row = mysqli_fetch_assoc($rs);
+
+    // Extract relevant information from the database row
+    $focus = $row['focus'];
+    $climbingGrade = $row['grade']; 
+    $trainingDays = $row['vacancy'];
+    print_r($focus);
+    print_r($climbingGrade);
+    print_r($trainingDays);
+
+    $trainingPlanGenerator = new ClimbingTrainingPlan($exercises, $trainingDays, $climbingGrade, $focus);
+    $trainingPlan = $trainingPlanGenerator->generateTrainingPlan();
+    return json_encode($trainingPlan, JSON_PRETTY_PRINT);
+}
+
+
+
 ?>
