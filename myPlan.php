@@ -20,7 +20,7 @@ if (!isset($_SESSION["usr"])) {
 </head>
 <body>
 <main class="main">
-  <aside class="sidebar">
+  <!-- <aside class="sidebar">
     <nav class="nav">
       <ul>
         <li class="active"><a href="#">My Plan</a></li>
@@ -29,13 +29,11 @@ if (!isset($_SESSION["usr"])) {
         <li><a href="#">Account</a></li>
       </ul>
     </nav>
-  </aside>
+  </aside> -->
 
   <section class="days">
     <div class="container">
       <?php
-      newPlan($_SESSION["usr"]);
-
       
       // JSON data containing the training plan
       $json_data = newPlan($_SESSION["usr"]);
