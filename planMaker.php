@@ -3,134 +3,152 @@
 class ClimbingTrainingPlan
 {
     private $exercises;
-    private $trainingDays;
+    private $availability;
     private $climbingGrade;
     private $focus;
     private $maxTrainingDays = 5;
-    private $maxStrengthTrainingDaysPerWeek = 3;
-    private $intensityIncrement = 0.5; // Intensity increment based on climbing grade
-    private $maxExercisesPerDay = 3;
-    private $progressFilePath = 'progress.json';
-
-    public function __construct($exercises, $trainingDays, $climbingGrade, $focus)
-    {
-        $this->exercises = $exercises;
-        $this->trainingDays = min($trainingDays, $this->maxTrainingDays);
-        $this->climbingGrade = $climbingGrade;
-        $this->focus = $focus;
+    private $maxStrengthTrainingDays = 3;
+    private $maxExercisesPerDay = 5;
+    
+    public function __construct($grade, $availability, $focus, $maxTrainingDays) {
+        $this->grade = $grade;
+        $this->availability = min($availability, $maxTrainingDays);
+        $this->focus = $focus + 1;
+        $this->exercises = loadExercises();
     }
 
-    public function generateTrainingPlan()
-    {
-        // Load progress data
-        $progressData = $this->loadProgressData();
-
-        // Adjust intensity based on climbing grade
-        $adjustedIntensity = $this->adjustIntensity($this->climbingGrade);
-
-        // Filter and adjust exercises based on focus, grade, and previous progress
-        $filteredExercises = $this->filterExercises();
-        $adjustedExercises = $this->adjustExercises($filteredExercises, $adjustedIntensity, $progressData);
-
-        // Calculate exercises per day
-        $exercisesPerDay = ceil(count($adjustedExercises) / $this->trainingDays);
-        if ($exercisesPerDay > $this->maxExercisesPerDay) {
-            $exercisesPerDay = $this->maxExercisesPerDay;
-        }
-
-        // Generate training plan
-        $trainingPlan = [];
-        $strengthTrainingDays = 0;
-        $usedExercises = []; // To track used exercises for each day
-
-        for ($day = 1; $day <= $this->trainingDays; $day++) {
-            $trainingPlan["Day $day"] = [];
-
-            foreach ($adjustedExercises as $exercise) {
-
-                // Shuffle exercises
-                shuffle($adjustedExercises);
-
-                // Check if the exercise has already been used on this day
-                if (in_array($exercise['name'], $usedExercises)) {
-                    continue;
-                }
-
-                // Check if the maximum number of strength training days per week is reached
-                if ($exercise['type'] == 'strength') {
-                    if ($strengthTrainingDays >= $this->maxStrengthTrainingDaysPerWeek) {
-                        continue;
-                    }
-                    $strengthTrainingDays++;
-                }
-
-                $trainingPlan["Day $day"][] = $exercise;
-                $usedExercises[] = $exercise['name'];
-
-            }
-
-            $usedExercises = []; // Reset used exercises for the next day
-        }
-
-        return $trainingPlan;
-    }
-
-    private function filterExercises()
-    {
-        $filteredExercises = [];
-        foreach ($this->exercises as $exercise) {
-            // Check if the exercise type matches the focus
-            if (($this->focus == 1 && $exercise['type'] == 'strength')
-                || ($this->focus == 5 && $exercise['type'] == 'technique')
-                || ($this->focus >= 2 && $this->focus <= 4)) {
-                $filteredExercises[] = $exercise;
-            }
-        }
-
-        // Filter exercises based on climber's grade and constraints
-        $filteredExercises = array_filter($filteredExercises, function ($exercise) {
-            // Check if the climber's grade allows  exercises
-            if ($exercise['difficulty'] > $this->climbingGrade) {
-                return false;
-            }
-            // Add more grade-based filters if needed
-            return true;
-        });
-
-        return $filteredExercises;
-    }
-
-    private function adjustIntensity($grade)
-    {
-        // Adjust intensity based on climbing grade
-        return max(1, $grade * $this->intensityIncrement);
-    }
-
-    private function adjustExercises($exercises, $intensity, $progressData)
-    {
-        // Adjust exercises based on intensity and previous progress
-        // For simplicity, this function can be further expanded
-        // based on specific criteria and algorithms for adjusting exercises
-
-        // For now, just return the filtered exercises
+    private function loadExercises() {
+        // Load exercises from JSON file
+        $exercisesJson = file_get_contents('exercise_directory.json');
+        $exercises = json_decode($exercisesJson, true);
         return $exercises;
     }
 
-    private function loadProgressData()
-    {
-        // Load progress data from file
-        if (file_exists($this->progressFilePath)) {
-            $progressData = file_get_contents($this->progressFilePath);
-            return json_decode($progressData, true);
+    public function generateTrainingPlan() {
+        $filteredExercises = $this->filterDifficuty();
+        $trainingPlan = $this->createPlan($filteredExercises);
+        return $trainingPlan;
+    }
+
+    private function filterDifficuty() {
+        $filtered = [];
+        foreach ($this->exercises as $exercise) {
+            if ($exercise['difficulty'] <= $this->grade) {
+                $filtered[] = $exercise;
+            }
         }
-        return [];
+        return $filtered;
+    }
+
+    private function numOfDays($maxStrengthTrainingDays) {
+        $focus = $this->focus;
+        $availability = $this->availability;
+        $strengthDays = 0;
+        $techniqueDays = 0;
+        $mixDays = 0;
+
+        switch($focus){
+            case 1:
+                $strengthDays = min($availability, $maxStrengthTrainingDays);
+                $mixDays = $availability - $strengthDays;
+                break;
+            case 2:
+                if ($availability <= 2) {
+                    $mixDays = $availability;
+
+                } else {
+                    $strengthDays = min($availability, $maxStrengthTrainingDays);
+                    $mixDays = ceil(($availability-$strengthDays)/2);
+                    $techniqueDays = $availability -($mixDays + $strengthDays);
+                }
+                break;
+            case 3:
+                if ($availability >=2) {
+                    $strengthDays = 1;
+                    $techniqueDays = 1;
+                    $mixDays = $availability - ($strengthDays + $techniqueDays);
+                } else {
+                    $mixDays = $availability;
+                }
+                break;
+            case 4:
+                $mixDays = ceil($availability * 0.3);
+                $techniqueDays = $availability - $mixDays;
+                break;
+            case 5:
+                $techniqueDays = $availability;
+                break;
+        }
+
+        // Pack the values into an array
+        $values = [$strengthDays, $techniqueDays, $mixDays];
+
+        return $values;  
+    }
+
+    private function exerciseArrays() {
+
+        $exercises = $this->exercises;
+        // Filter exercises to keep only strength-type exercises
+        $strengthExercises = array_filter($exercises, function ($exercise) {
+            return $exercise['type'] === 'strength';
+        });
+
+        $techniqueExercises = array_filter($exercises, function ($exercise) {
+            return $exercise['type'] === 'technique';
+        });
+
+        $conditioningExercises = array_filter($exercises, function ($exercise) {
+            return $exercise['type'] === 'conditioning';
+        });
+
+        $values = [$strengthExercises, $techniqueExercises, $conditioningExercises];
+
+        return $values;
+    }
+
+    private function dayAssignment() {
+        $days = [];
+        
+    }
+
+    private function createPlan() {
+
+        $days = numOfDays();
+        $strengthDays = $days[0];
+        $techniqueDays = $days[1];
+        $mixDays = $days[2];
+        $day = dayAssignment($strengthDays,$techniqueDays,$mixDays);
+
+        $exercises = exerciseArrays();
+        $strengthExercises = $exercises[0];
+        $techniqueExercises = $exercises[1];
+        $conditioningExercises = $exercises[2];
+
+
+        $availability = $this->availability;
+        $conditioning = FALSE;
+
+        $trainingPlan = [];
+        $yesterdaysDay = "";
+        $yesterdaysExercises = [];
+        $daysSinceRest = 0;
+    }
+
+    private function strengthDay($exercises, $yesterdaysExercises) {
+
+        shuffle($exercises);
+        $day = [];
+
+        for ($i = 0; $i == 3; $i++) {
+             $day[] = array_pop($exercises);
+        }
     }
 }
 
-function newPlan($un) {
 
-    $exercisesJson = file_get_contents('exercise_directory.json');
-    $exercises = json_decode($exercisesJson, true);
+
+function newPlan($un) {
 
     // Connect to the database
     $conn = require __DIR__ . "/database.php";
@@ -150,11 +168,8 @@ function newPlan($un) {
     $focus = $row['focus'];
     $climbingGrade = $row['grade']; 
     $trainingDays = $row['vacancy'];
-    print_r($focus);
-    print_r($climbingGrade);
-    print_r($trainingDays);
 
-    $trainingPlanGenerator = new ClimbingTrainingPlan($exercises, $trainingDays, $climbingGrade, $focus);
+    $trainingPlanGenerator = new ClimbingTrainingPlan($trainingDays, $climbingGrade, $focus);
     $trainingPlan = $trainingPlanGenerator->generateTrainingPlan();
     return json_encode($trainingPlan, JSON_PRETTY_PRINT);
 }
