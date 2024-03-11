@@ -40,10 +40,10 @@ if (!isset($_SESSION["usr"])) {
                 <form oninput="output.value = Math.round(range.valueAsNumber / 1000)" method="post">
 
                     <h2 class="center">What is your focus?</h2>
-                    <p>1 - Strength , 5 - Technique</p>
+                    <p>0 - Strength , 4 - Technique</p>
 
                     <div class="range-input">
-                        <input type="range" min="1" max="5" value="0" step="1" id="focus" name ="focus">
+                        <input type="range" min="0" max="4" value="1" step="1" id="focus" name ="focus">
                         <div class="value">
                           <div></div>
                         </div>
