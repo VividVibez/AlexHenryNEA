@@ -107,32 +107,97 @@ class ClimbingTrainingPlan
         return $values;
     }
 
-    private function dayAssignment() {
-        $days = [];
+    private function spreadRestDays($restDays) {
+        $weekDays = array('','','','','','','');
+ 
+
+        if ($restDays === 2) {
+            $weekDays[2] = 'rest';
+            $weekDays[5] = 'rest';
+        } elseif ($restDays === 3) {
+            $weekDays[2] = 'rest';
+            $weekDays[4] = 'rest';
+            $weekDays[6] = 'rest';
+        } elseif ($restDays === 4) {
+            $weekDays[0] = 'rest';
+            $weekDays[2] = 'rest';
+            $weekDays[3] = 'rest';
+            $weekDays[5] = 'rest';
+        } else {
+            $weekDays[0] = 'rest';
+            $weekDays[1] = 'rest';
+            $weekDays[3] = 'rest';
+            $weekDays[4] = 'rest';
+            $weekDays[5] = 'rest';
+        }
+        return $weekDays;
+    }
+
+    private function dayAssignment($s,$t,$m) {
         
+        $totalDays = $s + $t + $m;
+        $restDays = 7 - $totalDays;
+
+        $weekDays = $this->spreadRestDays($restDays);
+
+        for($x=0; $x<=6; $x++) {
+	
+            if ($weekDays[$x] === 'rest') {
+                print('rest');
+            } else{
+                if ($weekDays[max($x - 1,0)] === 'strength') {
+                    if ($t > 0) {
+                        $weekDays[$x] = 'technique';
+                        $t--;
+                        continue;
+                    } elseif ($m > 0) {
+                        $weekDays[$x] = 'mix';
+                        $m--;
+                        continue;
+                    }
+                } else {
+                    $weekDays[$x] = 'strength';
+                    $s--;
+                    continue;
+                }
+            }
+        }
+        return $weekDays;
     }
 
     private function createPlan() {
 
-        $days = numOfDays();
-        $strengthDays = $days[0];
-        $techniqueDays = $days[1];
-        $mixDays = $days[2];
-        $day = dayAssignment($strengthDays,$techniqueDays,$mixDays);
+        $typeOfDay = $this->numOfDays();
+        $strengthDays = $typeOfDay[0];
+        $techniqueDays = $typeOfDay[1];
+        $mixDays = $typeOfDay[2];
+        $days = $this->dayAssignment($strengthDays,$techniqueDays,$mixDays);
 
-        $exercises = exerciseArrays();
+        $exercises = $this->exerciseArrays();
         $strengthExercises = $exercises[0];
         $techniqueExercises = $exercises[1];
         $conditioningExercises = $exercises[2];
 
-
-        $availability = $this->availability;
-        $conditioning = FALSE;
-
         $trainingPlan = [];
-        $yesterdaysDay = "";
         $yesterdaysExercises = [];
-        $daysSinceRest = 0;
+        for ($x = 0; $x <= 6; $x++) {
+            if ($day === 'strength') {
+                $trainingPlan['Day' + $x][] = $this->strengthDay($strengthExercises,$yesterdaysExercises);
+                continue;
+            }
+            if ($day === 'technique') {
+                $trainingPlan['Day' + $x][] = $this->techniqueDay($strengthExercises,$yesterdaysExercises);
+                continue;
+            }
+            if ($day === 'mix') {
+                $trainingPlan['Day' + $x][] = $this->strengthDay($strengthExercises,$yesterdaysExercises);
+                continue;
+            }
+
+        }
+
+
+ 
     }
 
     private function strengthDay($exercises, $yesterdaysExercises) {
@@ -140,9 +205,16 @@ class ClimbingTrainingPlan
         shuffle($exercises);
         $day = [];
 
-        for ($i = 0; $i == 3; $i++) {
-             $day[] = array_pop($exercises);
+        do {
+            $exercise = array_pop($exercises);
+            if (array_search($exercise, $exercises) === FALSE) {
+                $day[] = $exercise
+            }
         }
+        
+            
+        
+        return $day
     }
 }
 
