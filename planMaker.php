@@ -13,6 +13,8 @@ class ClimbingTrainingPlan
     public function __construct($grade, $availability, $focus) {
         $this->grade = $grade;
         $this->availability = min($availability, $this->maxTrainingDays);
+        print('const avali: '.$availability);
+        echo "<br>";
         $this->focus = $focus + 1;
         $this->exercises = $this->loadExercises();
     }
@@ -46,6 +48,8 @@ class ClimbingTrainingPlan
         $strengthDays = 0;
         $techniqueDays = 0;
         $mixDays = 0;
+        print('aval: '.$availability);
+        print('focus: '. $focus);
 
         switch($focus){
             case 1:
@@ -161,8 +165,16 @@ class ClimbingTrainingPlan
         $strengthDays = $typeOfDay[0];
         $techniqueDays = $typeOfDay[1];
         $mixDays = $typeOfDay[2];
+        echo "<br>";
+        print($strengthDays);
+        print($techniqueDays);
+        print($mixDays);
+        echo "<br>";
+        
         $days = $this->dayAssignment($strengthDays,$techniqueDays,$mixDays);
-
+        echo "<br>";
+        print_r($days);
+        echo "<br>";echo "<br>";
         $exercises = $this->exerciseArrays();
         $strengthExercises = $exercises[0];
         $techniqueExercises = $exercises[1];
@@ -172,18 +184,18 @@ class ClimbingTrainingPlan
         $yesterdaysExercises = [];
 
         for ($x = 0; $x <= 6; $x++) {
-            if ($days[x] === 'strength') {
+            if ($days[$x] === 'strength') {
                 $trainingPlan['Day' . $x][] = $this->day($strengthExercises, $conditioningExercises, $yesterdaysExercises);
                 $yesterdaysExercises = $trainingPlan;
                 continue;
             }
-            if ($days[x] === 'technique') {
+            if ($days[$x] === 'technique') {
                 $trainingPlan['Day' . $x][] = $this->day($techniqueExercises, $conditioningExercises, $yesterdaysExercises);
                 $yesterdaysExercises = $trainingPlan;
                 continue;
             }
-            if ($days[x] === 'mix') {
-                $trainingPlan['Day' . $x][] = $this->mixDay($strengthExercises, $techniqueExercises);
+            if ($days[$x] === 'mix') {
+                $trainingPlan['Day' . $x][] = $this->mixDay($strengthExercises, $techniqueExercises, $conditioningExercises, $yesterdaysExercises);
                 $yesterdaysExercises = $trainingPlan;
                 continue;
             }
@@ -212,10 +224,12 @@ class ClimbingTrainingPlan
         return $day;
     }
 
-    private function mixDay($strengthExercises, $techniqueExercises, $yesterdaysExercises) {
+    private function mixDay($strengthExercises, $techniqueExercises, $conditioningExercises, $yesterdaysExercises) {
 
         shuffle($strengthExercises);
         shuffle($conditioningExercises);
+        shuffle($techniqueExercises);
+
         $day = [];
         $i = 0;
 
@@ -261,9 +275,26 @@ function newPlan($un) {
     $focus = $row['focus'];
     $climbingGrade = $row['grade']; 
     $trainingDays = $row['vacancy'];
+    print('focus '.$focus);
+    echo "<br>";
+    print('grade '.$climbingGrade);
+    echo "<br>";
+    print('days '.$trainingDays);
+    echo "<br>";
 
-    $trainingPlanGenerator = new ClimbingTrainingPlan($trainingDays, $climbingGrade, $focus);
+    $trainingPlanGenerator = new ClimbingTrainingPlan($climbingGrade, $trainingDays,  $focus);
     $trainingPlan = $trainingPlanGenerator->generateTrainingPlan();
+    print_r($trainingPlan);
+    foreach ($trainingPlan as $day => $workouts) {
+        echo "<h2>$day</h2>";
+        echo "<ul>";
+        foreach ($workouts[0] as $exercise) {
+            echo "<li>";
+            echo "Name: {$exercise['name']}, Equipment: {$exercise['equipment']}, Difficulty: {$exercise['difficulty']}, Type: {$exercise['type']}";
+            echo "</li>";
+        }
+        echo "</ul>";
+    }
     return json_encode($trainingPlan, JSON_PRETTY_PRINT);
 }
 
