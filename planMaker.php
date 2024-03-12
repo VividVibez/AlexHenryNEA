@@ -109,27 +109,17 @@ class ClimbingTrainingPlan
 
     private function spreadRestDays($restDays) {
         $weekDays = array('','','','','','','');
- 
-
-        if ($restDays === 2) {
-            $weekDays[2] = 'rest';
-            $weekDays[5] = 'rest';
-        } elseif ($restDays === 3) {
-            $weekDays[2] = 'rest';
-            $weekDays[4] = 'rest';
-            $weekDays[6] = 'rest';
-        } elseif ($restDays === 4) {
-            $weekDays[0] = 'rest';
-            $weekDays[2] = 'rest';
-            $weekDays[3] = 'rest';
-            $weekDays[5] = 'rest';
-        } else {
-            $weekDays[0] = 'rest';
-            $weekDays[1] = 'rest';
-            $weekDays[3] = 'rest';
-            $weekDays[4] = 'rest';
-            $weekDays[5] = 'rest';
-        }
+        $interval = $restDays/7;
+        $count = 1;
+        
+          for($i=0; $i<7; $i++) {
+            if (round($interval) == $count) {
+                      
+              $weekDays[$i] = 'rest';
+              $count ++;
+            }
+            $interval = $restDays/7 + $interval;
+          }
         return $weekDays;
     }
 
@@ -181,40 +171,66 @@ class ClimbingTrainingPlan
         $trainingPlan = [];
         $yesterdaysExercises = [];
         for ($x = 0; $x <= 6; $x++) {
-            if ($day === 'strength') {
-                $trainingPlan['Day' + $x][] = $this->strengthDay($strengthExercises,$yesterdaysExercises);
+            if ($days[x] === 'strength') {
+                $trainingPlan['Day' + $x][] = $this->day($strengthExercises, $conditioningExercises, $yesterdaysExercises);
                 continue;
             }
-            if ($day === 'technique') {
-                $trainingPlan['Day' + $x][] = $this->techniqueDay($strengthExercises,$yesterdaysExercises);
+            if ($days[x] === 'technique') {
+                $trainingPlan['Day' + $x][] = $this->day($techniqueExercises, $conditioningExercises, $yesterdaysExercises);
                 continue;
             }
-            if ($day === 'mix') {
-                $trainingPlan['Day' + $x][] = $this->strengthDay($strengthExercises,$yesterdaysExercises);
+            if ($days[x] === 'mix') {
+                $trainingPlan['Day' + $x][] = $this->mixDay($strengthExercises, $techniqueExercises);
                 continue;
             }
-
         }
-
-
- 
     }
 
-    private function strengthDay($exercises, $yesterdaysExercises) {
+    private function day($exercises, $conditioningExercises, $yesterdaysExercises) {
 
         shuffle($exercises);
+        shuffle($conditioningExercises);
         $day = [];
+        $i = 0;
 
         do {
             $exercise = array_pop($exercises);
-            if (array_search($exercise, $exercises) === FALSE) {
-                $day[] = $exercise
+            if (array_search($exercise, $yesterdaysExercises) === FALSE) {
+                $day[] = $exercise;
+                $i++;
             }
+        } while ($i <= 4);
+        if (rand(0,1) == 1) {
+            $day[] = array_pop($conditioningExercises);
+            $day[] = array_pop($conditioningExercises);
         }
-        
+        return $day;
+    }
+
+    private function mixDay($strengthExercises, $techniqueExercises, $yesterdaysExercises) {
+
+        shuffle($strengthExercises);
+        shuffle($conditioningExercises);
+        $day = [];
+        $i = 0;
+
+        do {
+            if (rand(0,1) === 1) {
+                $exercise = array_pop($strengthExercises);
+            } else {
+                $exercise = array_pop($techniqueExercises);
+            }
             
-        
-        return $day
+            if (array_search($exercise, $yesterdaysExercises) === FALSE) {
+                $day[] = $exercise;
+                $i++;
+            }
+        } while ($i <= 4);
+        if (rand(0,1) == 1) {
+            $day[] = array_pop($conditioningExercises);
+            $day[] = array_pop($conditioningExercises);
+        }
+        return $day;
     }
 }
 
