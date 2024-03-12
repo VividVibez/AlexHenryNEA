@@ -10,11 +10,11 @@ class ClimbingTrainingPlan
     private $maxStrengthTrainingDays = 3;
     private $maxExercisesPerDay = 5;
     
-    public function __construct($grade, $availability, $focus, $maxTrainingDays) {
+    public function __construct($grade, $availability, $focus) {
         $this->grade = $grade;
-        $this->availability = min($availability, $maxTrainingDays);
+        $this->availability = min($availability, $this->maxTrainingDays);
         $this->focus = $focus + 1;
-        $this->exercises = loadExercises();
+        $this->exercises = $this->loadExercises();
     }
 
     private function loadExercises() {
@@ -40,7 +40,7 @@ class ClimbingTrainingPlan
         return $filtered;
     }
 
-    private function numOfDays($maxStrengthTrainingDays) {
+    private function numOfDays() {
         $focus = $this->focus;
         $availability = $this->availability;
         $strengthDays = 0;
@@ -49,7 +49,7 @@ class ClimbingTrainingPlan
 
         switch($focus){
             case 1:
-                $strengthDays = min($availability, $maxStrengthTrainingDays);
+                $strengthDays = min($availability, $this->maxStrengthTrainingDays);
                 $mixDays = $availability - $strengthDays;
                 break;
             case 2:
@@ -57,7 +57,7 @@ class ClimbingTrainingPlan
                     $mixDays = $availability;
 
                 } else {
-                    $strengthDays = min($availability, $maxStrengthTrainingDays);
+                    $strengthDays = min($availability, $this->maxStrengthTrainingDays);
                     $mixDays = ceil(($availability-$strengthDays)/2);
                     $techniqueDays = $availability -($mixDays + $strengthDays);
                 }
@@ -170,20 +170,25 @@ class ClimbingTrainingPlan
 
         $trainingPlan = [];
         $yesterdaysExercises = [];
+
         for ($x = 0; $x <= 6; $x++) {
             if ($days[x] === 'strength') {
-                $trainingPlan['Day' + $x][] = $this->day($strengthExercises, $conditioningExercises, $yesterdaysExercises);
+                $trainingPlan['Day' . $x][] = $this->day($strengthExercises, $conditioningExercises, $yesterdaysExercises);
+                $yesterdaysExercises = $trainingPlan;
                 continue;
             }
             if ($days[x] === 'technique') {
-                $trainingPlan['Day' + $x][] = $this->day($techniqueExercises, $conditioningExercises, $yesterdaysExercises);
+                $trainingPlan['Day' . $x][] = $this->day($techniqueExercises, $conditioningExercises, $yesterdaysExercises);
+                $yesterdaysExercises = $trainingPlan;
                 continue;
             }
             if ($days[x] === 'mix') {
-                $trainingPlan['Day' + $x][] = $this->mixDay($strengthExercises, $techniqueExercises);
+                $trainingPlan['Day' . $x][] = $this->mixDay($strengthExercises, $techniqueExercises);
+                $yesterdaysExercises = $trainingPlan;
                 continue;
             }
         }
+        return $trainingPlan;
     }
 
     private function day($exercises, $conditioningExercises, $yesterdaysExercises) {
