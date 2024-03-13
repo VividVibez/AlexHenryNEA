@@ -204,8 +204,8 @@ class ClimbingTrainingPlan
                 $trainingPlan['Day ' . $x+1][] = $this->mixDay($strengthExercises, $techniqueExercises, $conditioningExercises, $yesterdaysExercises);
                 $yesterdaysExercises = $trainingPlan;
                 continue;
-            }
-
+            } 
+            $trainingPlan['Day' . $x+1][] = 'Rest Day';
 
         }
         return $trainingPlan;
@@ -288,16 +288,25 @@ function newPlan($un) {
     $trainingPlan = $trainingPlanGenerator->generateTrainingPlan();
 
     foreach ($trainingPlan as $day => $workouts) {
-        
+
         echo "<h2>$day</h2>";
         echo "<ul>";
+        if ($workouts[0] === 'Rest Day') {
+            echo "<li>";
+            echo "Rest Day";
+            echo "</li>";
+            echo "</ul>";
+            continue;
+        }
+        
         foreach ($workouts[0] as $exercise) {
             echo "<li>";
-            echo "Name: {$exercise['name']}, Equipment: {$exercise['equipment']}, Difficulty: {$exercise['difficulty']}, Type: {$exercise['type']}";
+            echo "Name: {$exercise['name']}";
             echo "</li>";
         }
         echo "</ul>";
     }
+    
     return json_encode($trainingPlan, JSON_PRETTY_PRINT);
 }
 ?>
