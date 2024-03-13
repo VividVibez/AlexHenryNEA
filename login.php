@@ -1,6 +1,9 @@
 <?php
 session_start();
+
 include 'functions.php';
+$_SESSION["questions"] = FALSE;
+
 if (isset($_SESSION["usr"])) {
     header("location: question1.php");
 }
@@ -67,7 +70,13 @@ if (isset($_SESSION["usr"])) {
                     if (userVerify($password, $username) == TRUE) {
                         $_SESSION["usr"] = $username;
                         // Redirect user to main page if login is successful
-                        $url = "question1.php";
+                        
+                        if ($_SESSION["questions"] === $TRUE) {
+                            $url = "myPlan.php";
+                        } else {
+                            $url = "question1.php";
+                        }
+                        
                         header("location:" . $url);
                         end;
                     } else {
