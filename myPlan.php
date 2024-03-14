@@ -14,63 +14,70 @@ if (!isset($_SESSION["usr"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <!-- <link href='css/navbar.css' rel='stylesheet'> -->
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-    <link href="css/myPlan.css" rel="stylesheet">
-</head>
+    <link href="css/nav.css" rel="stylesheet">
 </head>
 <body>
-<main class="main">
-  <!-- <aside class="sidebar">
-    <nav class="nav">
-      <ul>
-        <li class="active"><a href="#">My Plan</a></li>
-        <li><a href="#">Workout</a></li>
-        <li><a href="#">Statistics</a></li>
-        <li><a href="#">Account</a></li>
-      </ul>
-    </nav>
-  </aside> -->
-
-  <section class="days">
-    <div class="container">
-      <?php
-      $trainingPlan = newPlan($_SESSION["usr"]);
-
-      foreach ($trainingPlan as $day => $activities) {
-          echo "<h2>$day</h2>";
-          if ($activities[0] == 'Rest Day') {
-              echo "<p>Rest Day</p>";
-          } else {
-              echo "<table>";
-              echo "<tr><th>Name</th><th>Equipment</th><th>Difficulty</th><th>Type</th></tr>";
-              foreach ($activities[0] as $activity) {
-                  echo "<tr>";
-                  echo "<td>{$activity['name']}</td>";
-                  echo "<td>{$activity['equipment']}</td>";
-                  echo "<td>{$activity['difficulty']}</td>";
-                  echo "<td>{$activity['type']}</td>";
-                  echo "</tr>";
-              }
-              echo "</table>";
-          }
-      }
-      ?>
-      <style>
-        table {
-          width: 100%;
-          border-collapse: collapse;
-        }
-        th, td {
-          padding: 8px;
-          text-align: left;
-          border-bottom: 1px solid #ddd;
-        }
-        th {
-          background-color: #f2f2f2;
-        }
-      </style>
+<nav>
+    <div class="navbar">
+      <div class="container nav-container">
+          <input class="checkbox" type="checkbox" name="" id="" />
+          <div class="hamburger-lines">
+            <span class="line line1"></span>
+            <span class="line line2"></span>
+            <span class="line line3"></span>
+          </div>  
+        <div class="logo">
+          <h1>Navbar</h1>
+        </div>
+        <div class="menu-items">
+          <li><a href="#">My Plan</a></li>
+          <li><a href="#">Today</a></li>
+          <li><a href="#">Stop Watch</a></li>
+          <li><a href="#">Analytics</a></li>
+          <li><a href="logout.php">Logout</a></li>
+        </div>
+      </div>
     </div>
-  </section>
-</main>
+  </nav>
+
+<section class="days">
+  <div class="container">
+    <?php
+    $trainingPlan = newPlan($_SESSION["usr"]);
+    foreach ($trainingPlan as $day => $activities) {
+        echo "<h2>$day</h2>";
+        if ($activities[0] == 'Rest Day') {
+            echo "<p>Rest Day</p>";
+        } else {
+            echo "<table>";
+            echo "<tr><th>Name</th><th>Equipment</th><th>Difficulty</th><th>Type</th></tr>";
+            foreach ($activities[0] as $activity) {
+                echo "<tr>";
+                echo "<td>{$activity['name']}</td>";
+                echo "<td>{$activity['equipment']}</td>";
+                echo "<td>{$activity['difficulty']}</td>";
+                echo "<td>{$activity['type']}</td>";
+                echo "</tr>";
+            }
+            echo "</table>";
+        }
+    }
+    ?>
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </div>
+</section>
 </html>
