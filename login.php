@@ -7,7 +7,6 @@ $_SESSION["questions"] = FALSE;
 if (isset($_SESSION["usr"])) {
     header("location: question1.php");
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +16,6 @@ if (isset($_SESSION["usr"])) {
     <title>I Climb</title>
     <link rel="stylesheet" href="css/index.css"> <!-- Link to external CSS file -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> <!-- Link to external boxicons CSS file -->
-    <script src="index.js" defer></script> <!-- Link to external JavaScript file with 'defer' attribute for asynchronous loading -->
 </head>
 <body>
     <div class="wrapper">
