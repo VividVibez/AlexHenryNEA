@@ -287,26 +287,25 @@ function newPlan($un) {
     $trainingPlanGenerator = new ClimbingTrainingPlan($climbingGrade, $trainingDays,  $focus);
     $trainingPlan = $trainingPlanGenerator->generateTrainingPlan();
 
-    foreach ($trainingPlan as $day => $workouts) {
+    // foreach ($trainingPlan as $day => $workouts) {
 
-        echo "<h2>$day</h2>";
-        echo "<ul>";
-        if ($workouts[0] === 'Rest Day') {
-            echo "<li>";
-            echo "Rest Day";
-            echo "</li>";
-            echo "</ul>";
-            continue;
-        }
+    //     echo "<h2>$day</h2>";
+    //     echo "<ul>";
+    //     if ($workouts[0] === 'Rest Day') {
+    //         echo "<li>";
+    //         echo "Rest Day";
+    //         echo "</li>";
+    //         echo "</ul>";
+    //         continue;
+    //     }
         
-        foreach ($workouts[0] as $exercise) {
-            echo "<li>";
-            echo "Name: {$exercise['name']}";
-            echo "</li>";
-        }
-        echo "</ul>";
-    }
-    
-    return json_encode($trainingPlan, JSON_PRETTY_PRINT);
+    //     foreach ($workouts[0] as $exercise) {
+    //         echo "<li>";
+    //         echo "Name: {$exercise['name']}";
+    //         echo "</li>";
+    //     }
+    //     echo "</ul>";
+    // }
+    return $trainingPlan;
 }
 ?>
