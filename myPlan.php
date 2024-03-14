@@ -14,13 +14,14 @@ if (!isset($_SESSION["usr"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link href='css/navbar.css' rel='stylesheet'>
+    <!-- <link href='css/navbar.css' rel='stylesheet'> -->
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="css/myPlan.css" rel="stylesheet">
 </head>
 </head>
 <body>
 <main class="main">
-  <aside class="sidebar">
+  <!-- <aside class="sidebar">
     <nav class="nav">
       <ul>
         <li class="active"><a href="#">My Plan</a></li>
@@ -29,14 +30,46 @@ if (!isset($_SESSION["usr"])) {
         <li><a href="#">Account</a></li>
       </ul>
     </nav>
-  </aside>
+  </aside> -->
 
   <section class="days">
     <div class="container">
       <?php
-      $json_data = newPlan($_SESSION["usr"]);
-      ?>
+      $trainingPlan = newPlan($_SESSION["usr"]);
 
+      foreach ($trainingPlan as $day => $activities) {
+          echo "<h2>$day</h2>";
+          if ($activities[0] == 'Rest Day') {
+              echo "<p>Rest Day</p>";
+          } else {
+              echo "<table>";
+              echo "<tr><th>Name</th><th>Equipment</th><th>Difficulty</th><th>Type</th></tr>";
+              foreach ($activities[0] as $activity) {
+                  echo "<tr>";
+                  echo "<td>{$activity['name']}</td>";
+                  echo "<td>{$activity['equipment']}</td>";
+                  echo "<td>{$activity['difficulty']}</td>";
+                  echo "<td>{$activity['type']}</td>";
+                  echo "</tr>";
+              }
+              echo "</table>";
+          }
+      }
+      ?>
+      <style>
+        table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+        th, td {
+          padding: 8px;
+          text-align: left;
+          border-bottom: 1px solid #ddd;
+        }
+        th {
+          background-color: #f2f2f2;
+        }
+      </style>
     </div>
   </section>
 </main>
