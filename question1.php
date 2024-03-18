@@ -4,7 +4,20 @@ include 'functions.php';
 if (!isset($_SESSION["usr"])) {
     header("location: login.php");
 }
+$conn = require __DIR__ . "/database.php";
 
+$un = $_SESSION["usr"];
+
+$doneQuestions = "SELECT *
+FROM plan
+WHERE username = '$un'";
+
+$rs = mysqli_query($conn, $doneQuestions);
+$row = mysqli_fetch_assoc($rs);
+$done = $row['answered'];
+if ($done === 1) {
+    header("location: myPlan.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +67,7 @@ if (!isset($_SESSION["usr"])) {
                     if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         
                         if (isset($_POST["grade"])) {
-                            savequestion($_SESSION["usr"],"grade",$_POST["grade"]);
+                            savequestion($_SESSION["usr"], "grade", $_POST["grade"]);
                             header("location: question2.php");
                         }
                     }
