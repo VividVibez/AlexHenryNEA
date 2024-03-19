@@ -4,20 +4,24 @@ include 'functions.php';
 if (!isset($_SESSION["usr"])) {
     header("location: login.php");
 }
-$conn = require __DIR__ . "/database.php";
+planSetup($_SESSION["usr"]);
 
-$un = $_SESSION["usr"];
+function done($un) {
+    $conn = require __DIR__ . "/database.php";
 
-$doneQuestions = "SELECT *
-FROM plan
-WHERE username = '$un'";
+    $doneQuestions = "SELECT *
+    FROM plan
+    WHERE username = '$un'";
 
-$rs = mysqli_query($conn, $doneQuestions);
-$row = mysqli_fetch_assoc($rs);
-$done = $row['answered'];
-if ($done === 1) {
-    header("location: myPlan.php");
+    $rs = mysqli_query($conn, $doneQuestions);
+    $row = mysqli_fetch_assoc($rs);
+    $done = $row['answered'];
+    
+    if ($done == 1) {
+        header("location: myPlan.php");
+    }
 }
+done($_SESSION["usr"]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
