@@ -32,7 +32,7 @@ if (!isset($_SESSION["usr"])) {
         </div>
         <div class="menu-items">
           <li><a href="#">My Plan</a></li>
-          <li><a href="#">Today</a></li>
+          <li><a href="myDay.php">Today</a></li>
           <li><a href="#">Stop Watch</a></li>
           <li><a href="#">Analytics</a></li>
           <li><a href="logout.php">Logout</a></li>
@@ -44,25 +44,36 @@ if (!isset($_SESSION["usr"])) {
 <section class="days">
   <div class="container">
     <?php
-    $trainingPlan = newPlan($_SESSION["usr"]);
-    foreach ($trainingPlan as $day => $activities) {
-        echo "<h2>$day</h2>";
-        if ($activities[0] == 'Rest Day') {
-            echo "<p>Rest Day</p>";
-        } else {
-            echo "<table>";
-            echo "<tr><th>Name</th><th>Equipment</th><th>Difficulty</th><th>Type</th></tr>";
-            foreach ($activities[0] as $activity) {
-                echo "<tr>";
-                echo "<td>{$activity['name']}</td>";
-                echo "<td>{$activity['equipment']}</td>";
-                echo "<td>{$activity['difficulty']}</td>";
-                echo "<td>{$activity['type']}</td>";
-                echo "</tr>";
-            }
-            echo "</table>";
-        }
+    $file = "plans/" . $_SESSION["usr"] . ".json";
+    if (file_exists($file)) {
+      // Read the JSON file  
+      $json = file_get_contents($file); 
+  
+      // Decode the JSON file 
+      $trainingPlan = json_decode($json,true); 
+
+    } else {
+
+      $trainingPlan = newPlan($_SESSION["usr"]);
     }
+
+    foreach ($trainingPlan as $day => $activities) {
+      echo "<h2>$day</h2>";
+      if ($activities[0] == 'Rest Day') {
+          echo "<p>Rest Day</p>";
+      } else {
+          echo "<table>";
+          echo "<tr><th>Name</th><th>Equipment</th><th>Type</th></tr>";
+          foreach ($activities as $activity) {
+              echo "<tr>";
+              echo "<td>{$activity['name']}</td>";
+              echo "<td>{$activity['equipment']}</td>";
+              echo "<td>{$activity['type']}</td>";
+              echo "</tr>";
+          }
+          echo "</table>";
+      }
+  }
     ?>
     <style>
       table {
