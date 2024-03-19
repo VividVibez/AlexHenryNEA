@@ -191,17 +191,17 @@ class ClimbingTrainingPlan
 
         for ($x = 0; $x <= 6; $x++) {
             if ($days[$x] === 'strength') {
-                $trainingPlan['Day ' . $x+1][] = $this->day($strengthExercises, $conditioningExercises, $yesterdaysExercises);
+                $trainingPlan['Day ' . $x+1] = $this->day($strengthExercises, $conditioningExercises, $yesterdaysExercises);
                 $yesterdaysExercises = $trainingPlan;
                 continue;
             }
             if ($days[$x] === 'technique') {
-                $trainingPlan['Day ' . $x+1][] = $this->day($techniqueExercises, $conditioningExercises, $yesterdaysExercises);
+                $trainingPlan['Day ' . $x+1] = $this->day($techniqueExercises, $conditioningExercises, $yesterdaysExercises);
                 $yesterdaysExercises = $trainingPlan;
                 continue;
             }
             if ($days[$x] === 'mix') {
-                $trainingPlan['Day ' . $x+1][] = $this->mixDay($strengthExercises, $techniqueExercises, $conditioningExercises, $yesterdaysExercises);
+                $trainingPlan['Day ' . $x+1] = $this->mixDay($strengthExercises, $techniqueExercises, $conditioningExercises, $yesterdaysExercises);
                 $yesterdaysExercises = $trainingPlan;
                 continue;
             } 
@@ -261,25 +261,32 @@ class ClimbingTrainingPlan
     }
 }
 
+function save($trainingPlan, $username, $conn) {
 
+    // Convert training plan array to JSON format
+    $jsonTrainingPlan = json_encode($trainingPlan);
+
+    // Define the filename based on the username
+    $filename = "plans/" . $username . ".json";
+
+    // Write JSON data to the file
+    $file = fopen($filename, 'w');
+    fwrite($file, $jsonTrainingPlan);
+    fclose($file);
+}
 
 function newPlan($un) {
 
-    // Connect to the database
     $conn = require __DIR__ . "/database.php";
 
-    // SQL query to retrieve user information based on username
     $check = "SELECT *
     FROM basic_info
     WHERE username = '$un'";
 
-    // Execute the SQL query
     $rs = mysqli_query($conn, $check);
 
-    // Fetch the row of data as an associative array
     $row = mysqli_fetch_assoc($rs);
 
-    // Extract relevant information from the database row
     $focus = $row['focus'];
     $climbingGrade = $row['grade']; 
     $trainingDays = $row['vacancy'];
@@ -287,25 +294,7 @@ function newPlan($un) {
     $trainingPlanGenerator = new ClimbingTrainingPlan($climbingGrade, $trainingDays,  $focus);
     $trainingPlan = $trainingPlanGenerator->generateTrainingPlan();
 
-    // foreach ($trainingPlan as $day => $workouts) {
-
-    //     echo "<h2>$day</h2>";
-    //     echo "<ul>";
-    //     if ($workouts[0] === 'Rest Day') {
-    //         echo "<li>";
-    //         echo "Rest Day";
-    //         echo "</li>";
-    //         echo "</ul>";
-    //         continue;
-    //     }
-        
-    //     foreach ($workouts[0] as $exercise) {
-    //         echo "<li>";
-    //         echo "Name: {$exercise['name']}";
-    //         echo "</li>";
-    //     }
-    //     echo "</ul>";
-    // }
+    save($trainingPlan, $un, $conn);
     return $trainingPlan;
 }
 ?>
