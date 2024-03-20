@@ -1,105 +1,138 @@
 [
-    {
+  {
       "name": "Pull-up",
       "equipment": "Pull-up bar",
       "difficulty": 3,
-      "type": "strength"
-    },
-    {
+      "type": "strength",
+      "reps": 10,
+      "sets": 3
+  },
+  {
       "name": "Campus board",
       "equipment": "Campus board",
       "difficulty": 5,
-      "type": "strength"
-    },
-    {
+      "type": "strength",
+      "reps": 8,
+      "sets": 4
+  },
+  {
       "name": "Climbing ladder",
       "equipment": "Climbing ladder",
       "difficulty": 1,
-      "type": "technique"
-    },
-    {
+      "type": "technique",
+      "reps": 0,
+      "sets": 0
+  },
+  {
       "name": "Deadhangs",
       "equipment": "Hangboard",
       "difficulty": 4,
-      "type": "strength"
-    },
-    {
+      "type": "strength",
+      "reps": 8,
+      "sets": 3
+  },
+  {
       "name": "Moonboard climbing",
       "equipment": "Moonboard",
       "difficulty": 6,
-      "type": "strength"
-    },
-    {
+      "type": "strength",
+      "reps": 6,
+      "sets": 4
+  },
+  {
       "name": "Project Climbing",
       "equipment": "Climbing wall",
       "difficulty": 3,
-      "type": "technique"
-    },
-    {
+      "type": "technique",
+      "reps": 0,
+      "sets": 0
+  },
+  {
       "name": "Mileage Climbing",
       "equipment": "Climbing wall",
       "difficulty": 1,
-      "type": "technique"
-    },
-    {
-        "name": "Dyno Practice",
-        "equipment": "Climbing wall",
-        "difficulty": 4,
-        "type": "technique"
-    },
-    {
-        "name": "Lock-offs",
-        "equipment": "Pull-up bar",
-        "difficulty": 6,
-        "type": "strength"
-    },
-    {
-        "name": "Core Exercises",
-        "equipment": "none",
-        "difficulty": 2,
-        "type": "conditioning"
-    },
-    {
-        "name": "Push-ups",
-        "equipment": "None",
-        "difficulty": 2,
-        "type": "conditioning"
-    },
-    {
-        "name": "Running",
-        "equipment": "none",
-        "difficulty": 1,
-        "type": "conditioning"
-    },
-    {
-        "name": "Bench Press",
-        "equipment": "Barbell, Bench",
-        "difficulty": 2,
-        "type": "strength"
-    },
-    {
-        "name": "Deadlift",
-        "equipment": "Barbell, Plates",
-        "difficulty": 2,
-        "type": "strength"
-    },
-    {
-        "name": "Squats",
-        "equipment": "Barbell, Squat Rack",
-        "difficulty": 2,
-        "type": "strength"
-    },
-    {
-        "name": "Slab Climbing",
-        "equipment": "Climbing wall",
-        "difficulty": 1,
-        "type": "technique"
-    },
-    {
-        "name": "Heel Hook",
-        "equipment": "Climbing wall",
-        "difficulty": 3,
-        "type": "technique"
-    }
+      "type": "technique",
+      "reps": 0,
+      "sets": 0
+  },
+  {
+      "name": "Dyno Practice",
+      "equipment": "Climbing wall",
+      "difficulty": 4,
+      "type": "technique",
+      "reps": 0,
+      "sets": 0
+  },
+  {
+      "name": "Lock-offs",
+      "equipment": "Pull-up bar",
+      "difficulty": 6,
+      "type": "strength",
+      "reps": 6,
+      "sets": 4
+  },
+  {
+      "name": "Core Exercises",
+      "equipment": "none",
+      "difficulty": 2,
+      "type": "conditioning",
+      "reps": 15,
+      "sets": 3
+  },
+  {
+      "name": "Push-ups",
+      "equipment": "None",
+      "difficulty": 2,
+      "type": "conditioning",
+      "reps": 20,
+      "sets": 3
+  },
+  {
+      "name": "Running",
+      "equipment": "none",
+      "difficulty": 1,
+      "type": "conditioning",
+      "reps": 0,
+      "sets": 0
+  },
+  {
+      "name": "Bench Press",
+      "equipment": "Barbell, Bench",
+      "difficulty": 2,
+      "type": "strength",
+      "reps": 10,
+      "sets": 3
+  },
+  {
+      "name": "Deadlift",
+      "equipment": "Barbell, Plates",
+      "difficulty": 2,
+      "type": "strength",
+      "reps": 8,
+      "sets": 3
+  },
+  {
+      "name": "Squats",
+      "equipment": "Barbell, Squat Rack",
+      "difficulty": 2,
+      "type": "strength",
+      "reps": 10,
+      "sets": 3
+  },
+  {
+      "name": "Slab Climbing",
+      "equipment": "Climbing wall",
+      "difficulty": 1,
+      "type": "technique",
+      "reps": 0,
+      "sets": 0
+  },
+  {
+      "name": "Heel Hook",
+      "equipment": "Climbing wall",
+      "difficulty": 3,
+      "type": "technique",
+      "reps": 0,
+      "sets": 0
+  }
 ]
-  
