@@ -2,6 +2,7 @@
 session_start();
 
 include 'functions.php';
+include 'planMaker.php';
 
 if (!isset($_SESSION["usr"])) {
     header("location: login.php");
@@ -76,20 +77,26 @@ if (!isset($_SESSION["usr"])) {
     // Function to display activities as a table with CSS styling
     function displayActivitiesAsTable($activities) {
         echo "<table class='activities-table'>";
-        echo "<tr><th>Name</th><th>Equipment</th><th>Difficulty</th><th>Type</th></tr>";
+        echo '<form method="post" novalidate>';
+        echo "<tr><th>Name</th><th>Reps</th><th>Sets</th><th>Weight</th></tr>";
         foreach ($activities as $activity) {
+            $name = $activity['name'];
             echo "<tr>";
-            echo "<td>{$activity['name']}</td>";
-            echo "<td>{$activity['equipment']}</td>";
-            echo "<td>{$activity['difficulty']}</td>";
-            echo "<td>{$activity['type']}</td>";
+            echo "<td>{$name}</td>";
+            echo "<td>{$activity['reps']}</td>";
+            echo "<td>{$activity['sets']}</td>";
+            echo "<td>";
+            echo "<input type='text'  placeholder='kg' id='{$name}' name='{$name}'";
+            echo "</td>";        
             echo "</tr>";
         }
+        echo "</form>";
         echo "</table>";
+
     }
 
-    // Test the function
-    $dayToFind = "Day " . $DayOfWeekNumber;
+    // $dayToFind = "Day " . $DayOfWeekNumber;
+    $dayToFind = "Day 2";
     $activities = findActivitiesByDay($trainingPlan, $dayToFind);
     if ($activities == FALSE) {
         echo "Today is a rest day.";
