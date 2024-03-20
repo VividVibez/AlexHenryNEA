@@ -29,7 +29,10 @@ if (!isset($_SESSION["usr"])) {
                 <span class="line line3"></span>
             </div>  
             <div class="logo">
-                <h1>Navbar</h1>
+                <?php 
+                $usr = $_SESSION["usr"];
+                echo "<h1>$usr</h1>"; 
+                ?>
             </div>
             <div class="menu-items">
                 <li><a href="myPlan.php">My Plan</a></li>
