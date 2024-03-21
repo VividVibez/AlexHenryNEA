@@ -152,7 +152,6 @@ if (!isset($_SESSION["usr"])) {
         fwrite($file, $history);
         fclose($file);
 
-        
     }
 ?>
 <script>
