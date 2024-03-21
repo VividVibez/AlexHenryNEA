@@ -94,12 +94,12 @@ if (!isset($_SESSION["usr"])) {
             echo "<td>{$activity['reps']}</td>";
             echo "<td>{$activity['sets']}</td>";
             echo "<td>";
-            echo "<form class='form' method='post' novalidate>";
+            echo "<form id='{$name}' class='form' method='post' novalidate>";
             echo "<div class='form__group'>
                     <input type='text' class='form__input' name='{$name}' id='{$name}' placeholder='{$activity['measurement']}' required='' />
                     <label for='name' class='form__label'>{$activity['measurement']}</label>
                 </div>
-                <button type='submit' class='button-34' role='button'>Complete</button>";
+                <button onclick='CollapseForm({$name})' type='submit' class='button-34' role='button'>Complete</button>";
             echo "</form>";
             echo "</td>";        
             echo "</tr>";
@@ -109,7 +109,6 @@ if (!isset($_SESSION["usr"])) {
         return $names;
     }
 
-    // $dayToFind = "Day " . $DayOfWeekNumber;
     $dayToFind = "Day ". $DayOfWeekNumber;
     $activities = findActivitiesByDay($trainingPlan, $dayToFind);
     if ($activities == FALSE) {
@@ -156,6 +155,13 @@ if (!isset($_SESSION["usr"])) {
         
     }
 ?>
+<script>
+function CollapseForm(name) {   
+    console.log("test");
+    document.write('<div>Print this after the script tag</div>');
+    document.getElementById(name).hidden = true;
+}
+</script>
 <style>
 
 .activities-table {
@@ -215,7 +221,7 @@ if (!isset($_SESSION["usr"])) {
   font-family: 'Roboto', sans-serif;
   color: #333;
   font-size: 16px;
-    margin: 0;
+  margin: 0;
   padding: 1rem 1.5rem;
   border-radius: 0.2rem;
   background-color: rgb(255, 255, 255);
@@ -238,6 +244,7 @@ if (!isset($_SESSION["usr"])) {
     
 }
 </style>
+
 </div>
 </section>
 </html>
