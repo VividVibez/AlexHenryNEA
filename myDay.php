@@ -15,6 +15,7 @@ if (!isset($_SESSION["usr"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Today</title>
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="css/myDay.css" rel="stylesheet">
     <link href="css/nav.css" rel="stylesheet">
     
@@ -77,7 +78,6 @@ if (!isset($_SESSION["usr"])) {
     // Function to display activities as a table with CSS styling
     function displayActivitiesAsTable($activities) {
         echo "<table class='activities-table'>";
-        echo '<form method="post" novalidate>';
         echo "<tr><th>Name</th><th>Reps</th><th>Sets</th><th>Weight</th></tr>";
         foreach ($activities as $activity) {
             $name = $activity['name'];
@@ -86,11 +86,15 @@ if (!isset($_SESSION["usr"])) {
             echo "<td>{$activity['reps']}</td>";
             echo "<td>{$activity['sets']}</td>";
             echo "<td>";
-            echo "<input type='text'  placeholder='kg' id='{$name}' name='{$name}'";
+            echo "<form class='form' method='post' action='myDay.php novalidate>";
+            echo "<div class='form__group'>
+                    <input type='text' class='form__input' id='{$name}' placeholder='{$activity['measurement']}' required='' />
+                    <label for='name' class='form__label'>{$activity['measurement']}</label>
+                </div>";
+            echo "</form>";
             echo "</td>";        
             echo "</tr>";
         }
-        echo "</form>";
         echo "</table>";
 
     }
@@ -104,29 +108,92 @@ if (!isset($_SESSION["usr"])) {
         displayActivitiesAsTable($activities);
     }
 
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        print_r($_POST);
+    }
+
 ?>
 <style>
 
-    .activities-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
+.activities-table {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-    .activities-table th,
-    .activities-table td {
-        padding: 8px;
-        text-align: left;
-        border: 1px solid #dddddd;
-    }
+.activities-table th,
+.activities-table td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #dddddd;
+}
 
-    .activities-table th {
-        background-color: #f2f2f2;
-    }
+.activities-table th {
+    background-color: #f2f2f2;
+}
 
-    .activities-table tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
+.activities-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+.button-34 {
+    background: #5E5DF0;
+    border-radius: 999px;
+    box-shadow: #5E5DF0 0 10px 20px -10px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    opacity: 1;
+    outline: 0 solid transparent;
+    padding: 8px 18px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: fit-content;
+    word-break: break-word;
+    border: 0;
+}
+
+
+
+
+.form__label {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  margin: 0;
+  display: block;
+  transition: all 0.3s;
+  transform: translateY(0rem);
+}
+
+.form__input {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  font-size: 16px;
+    margin: 0;
+  padding: 1rem 1.5rem;
+  border-radius: 0.2rem;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  width: 50%;
+  display: block;
+}
+
+.form__input:placeholder-shown + .form__label {
+  opacity: 0;
+  display:none;
+  visibility: hidden;
+  -webkit-transform: translateY(-4rem);
+  transform: translateY(-4rem);
+}
+
+
 </style>
 </div>
 </section>
 </html>
+
+
+
