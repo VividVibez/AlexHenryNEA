@@ -5,7 +5,8 @@
       "difficulty": 3,
       "type": "strength",
       "reps": 10,
-      "sets": 3
+      "sets": 3,
+      "measurement": "weight"
   },
   {
       "name": "Campus board",
@@ -13,7 +14,8 @@
       "difficulty": 5,
       "type": "strength",
       "reps": 8,
-      "sets": 4
+      "sets": 4,
+      "measurement": "weight"
   },
   {
       "name": "Climbing ladder",
@@ -21,7 +23,8 @@
       "difficulty": 1,
       "type": "technique",
       "reps": 0,
-      "sets": 0
+      "sets": 0,
+      "measurement": "time"
   },
   {
       "name": "Deadhangs",
@@ -29,7 +32,8 @@
       "difficulty": 4,
       "type": "strength",
       "reps": 8,
-      "sets": 3
+      "sets": 3,
+      "measurement": "weight"
   },
   {
       "name": "Moonboard climbing",
@@ -37,7 +41,8 @@
       "difficulty": 6,
       "type": "strength",
       "reps": 6,
-      "sets": 4
+      "sets": 4,
+      "measurement": "difficulty"
   },
   {
       "name": "Project Climbing",
@@ -45,7 +50,8 @@
       "difficulty": 3,
       "type": "technique",
       "reps": 0,
-      "sets": 0
+      "sets": 0,
+      "measurement": "difficulty"
   },
   {
       "name": "Mileage Climbing",
@@ -53,7 +59,8 @@
       "difficulty": 1,
       "type": "technique",
       "reps": 0,
-      "sets": 0
+      "sets": 0,
+      "measurement": "difficulty"
   },
   {
       "name": "Dyno Practice",
@@ -61,7 +68,8 @@
       "difficulty": 4,
       "type": "technique",
       "reps": 0,
-      "sets": 0
+      "sets": 0,
+      "measurement": "difficulty"
   },
   {
       "name": "Lock-offs",
@@ -69,7 +77,8 @@
       "difficulty": 6,
       "type": "strength",
       "reps": 6,
-      "sets": 4
+      "sets": 4,
+      "measurement": "time"
   },
   {
       "name": "Core Exercises",
@@ -77,7 +86,8 @@
       "difficulty": 2,
       "type": "conditioning",
       "reps": 15,
-      "sets": 3
+      "sets": 3,
+      "measurement": "weight"
   },
   {
       "name": "Push-ups",
@@ -85,7 +95,8 @@
       "difficulty": 2,
       "type": "conditioning",
       "reps": 20,
-      "sets": 3
+      "sets": 3,
+      "measurement": "weight"
   },
   {
       "name": "Running",
@@ -93,7 +104,8 @@
       "difficulty": 1,
       "type": "conditioning",
       "reps": 0,
-      "sets": 0
+      "sets": 0,
+      "measurement": "distance"
   },
   {
       "name": "Bench Press",
@@ -101,7 +113,8 @@
       "difficulty": 2,
       "type": "strength",
       "reps": 10,
-      "sets": 3
+      "sets": 3,
+      "measurement": "weight"
   },
   {
       "name": "Deadlift",
@@ -109,7 +122,8 @@
       "difficulty": 2,
       "type": "strength",
       "reps": 8,
-      "sets": 3
+      "sets": 3,
+      "measurement": "weight"
   },
   {
       "name": "Squats",
@@ -117,7 +131,8 @@
       "difficulty": 2,
       "type": "strength",
       "reps": 10,
-      "sets": 3
+      "sets": 3,
+      "measurement": "weight"
   },
   {
       "name": "Slab Climbing",
@@ -125,7 +140,8 @@
       "difficulty": 1,
       "type": "technique",
       "reps": 0,
-      "sets": 0
+      "sets": 0,
+      "measurement": "difficulty"
   },
   {
       "name": "Heel Hook",
@@ -133,6 +149,7 @@
       "difficulty": 3,
       "type": "technique",
       "reps": 0,
-      "sets": 0
+      "sets": 0,
+      "measurement": "difficulty"
   }
 ]
