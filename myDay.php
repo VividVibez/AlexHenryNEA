@@ -78,40 +78,83 @@ if (!isset($_SESSION["usr"])) {
     // Function to display activities as a table with CSS styling
     function displayActivitiesAsTable($activities) {
         echo "<table class='activities-table'>";
-        echo "<tr><th>Name</th><th>Reps</th><th>Sets</th><th>Weight</th></tr>";
+        echo "<tr><th>Name</th><th>Reps</th><th>Sets</th><th>Performance</th></tr>";
+
+        $names = [];
+        $x = 0;
+
         foreach ($activities as $activity) {
+
             $name = $activity['name'];
+            $names[$x] = $name;
+            $x++;
+
             echo "<tr>";
             echo "<td>{$name}</td>";
             echo "<td>{$activity['reps']}</td>";
             echo "<td>{$activity['sets']}</td>";
             echo "<td>";
-            echo "<form class='form' method='post' action='myDay.php novalidate>";
+            echo "<form class='form' method='post' novalidate>";
             echo "<div class='form__group'>
-                    <input type='text' class='form__input' id='{$name}' placeholder='{$activity['measurement']}' required='' />
+                    <input type='text' class='form__input' name='{$name}' id='{$name}' placeholder='{$activity['measurement']}' required='' />
                     <label for='name' class='form__label'>{$activity['measurement']}</label>
-                </div>";
+                </div>
+                <button type='submit' class='button-34' role='button'>Complete</button>";
             echo "</form>";
             echo "</td>";        
             echo "</tr>";
         }
+        
         echo "</table>";
-
+        return $names;
     }
 
     // $dayToFind = "Day " . $DayOfWeekNumber;
-    $dayToFind = "Day 2";
+    $dayToFind = "Day ". $DayOfWeekNumber;
     $activities = findActivitiesByDay($trainingPlan, $dayToFind);
     if ($activities == FALSE) {
         echo "Today is a rest day.";
     } else {
-        displayActivitiesAsTable($activities);
+        $names = displayActivitiesAsTable($activities);
     }
-
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        print_r($_POST);
+        foreach ($names as $name) {
+            $name = str_replace(' ', '_', $name);
+            
+            if (isset($_POST[$name])) {
+                saveHistory($_POST[$name], $name);
+            }
+        }
     }
+    function saveHistory($value, $name) {
+        $filename = ("history/" . $_SESSION["usr"] . ".json");
+        
+        if (file_exists($filename)) {
+            // Read the JSON file  
+            $json = file_get_contents($filename); 
+        
+            // Decode the JSON file 
+            $history = json_decode($json,true);
+        } else {
+            
+            $history = [];
+        }
 
+        $file = fopen($filename, 'w');
+
+        if (isset($history[$name])) {
+            $history[$name] = $history[$name] . "," . $value;
+        } else {
+            $history[$name] = $value;
+        }
+
+        $history = json_encode($history);
+
+        fwrite($file, $history);
+        fclose($file);
+
+        
+    }
 ?>
 <style>
 
@@ -135,6 +178,9 @@ if (!isset($_SESSION["usr"])) {
     background-color: #f9f9f9;
 }
 .button-34 {
+    
+    position: absolute;
+    margin-left: 20rem;
     background: #5E5DF0;
     border-radius: 999px;
     box-shadow: #5E5DF0 0 10px 20px -10px;
@@ -156,9 +202,6 @@ if (!isset($_SESSION["usr"])) {
     border: 0;
 }
 
-
-
-
 .form__label {
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
@@ -177,7 +220,7 @@ if (!isset($_SESSION["usr"])) {
   border-radius: 0.2rem;
   background-color: rgb(255, 255, 255);
   border: none;
-  width: 50%;
+  width: 80%;
   display: block;
 }
 
@@ -189,11 +232,12 @@ if (!isset($_SESSION["usr"])) {
   transform: translateY(-4rem);
 }
 
-
+.form{
+    display: flex;
+    position: relative;
+    
+}
 </style>
 </div>
 </section>
 </html>
-
-
-
