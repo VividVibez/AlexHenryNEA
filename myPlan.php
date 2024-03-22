@@ -37,7 +37,7 @@ if (!isset($_SESSION["usr"])) {
           <li><a href="#">My Plan</a></li>
           <li><a href="myDay.php">Today</a></li>
           <li><a href="#">Stop Watch</a></li>
-          <li><a href="#">Analytics</a></li>
+          <li><a href="myAnalytics.php">Analytics</a></li>
           <li><a href="logout.php">Logout</a></li>
         </div>
       </div>
