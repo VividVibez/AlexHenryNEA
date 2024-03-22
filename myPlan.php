@@ -36,7 +36,7 @@ if (!isset($_SESSION["usr"])) {
         <div class="menu-items">
           <li><a href="#">My Plan</a></li>
           <li><a href="myDay.php">Today</a></li>
-          <li><a href="#">Stop Watch</a></li>
+          <li><a href="myStopwatch.php">Stop Watch</a></li>
           <li><a href="myAnalytics.php">Analytics</a></li>
           <li><a href="logout.php">Logout</a></li>
         </div>
