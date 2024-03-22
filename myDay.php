@@ -40,7 +40,7 @@ if (!isset($_SESSION["usr"])) {
                 <li><a href="myPlan.php">My Plan</a></li>
                 <li><a href="myDay.php">Today</a></li>
                 <li><a href="#">Stop Watch</a></li>
-                <li><a href="#">Analytics</a></li>
+                <li><a href="myAnalytics.php">Analytics</a></li>
                 <li><a href="logout.php">Logout</a></li>
             </div>
         </div>
@@ -115,16 +115,17 @@ if (!isset($_SESSION["usr"])) {
         echo "Today is a rest day.";
     } else {
         $names = displayActivitiesAsTable($activities);
-    }
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        foreach ($names as $name) {
-            $name = str_replace(' ', '_', $name);
-            
-            if (isset($_POST[$name])) {
-                saveHistory($_POST[$name], $name);
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            foreach ($names as $name) {
+                $name = str_replace(' ', '_', $name);
+                
+                if (isset($_POST[$name])) {
+                    saveHistory($_POST[$name], $name);
+                }
             }
         }
     }
+
     function saveHistory($value, $name) {
         $filename = ("history/" . $_SESSION["usr"] . ".json");
         
