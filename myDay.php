@@ -38,8 +38,8 @@ if (!isset($_SESSION["usr"])) {
             </div>
             <div class="menu-items">
                 <li><a href="myPlan.php">My Plan</a></li>
-                <li><a href="myDay.php">Today</a></li>
-                <li><a href="#">Stop Watch</a></li>
+                <li><a href="#">Today</a></li>
+                <li><a href="myStopwatch.php">Stop Watch</a></li>
                 <li><a href="myAnalytics.php">Analytics</a></li>
                 <li><a href="logout.php">Logout</a></li>
             </div>
@@ -109,7 +109,7 @@ if (!isset($_SESSION["usr"])) {
         return $names;
     }
 
-    $dayToFind = "Day ". $DayOfWeekNumber;
+    $dayToFind = "Day ". 2;
     $activities = findActivitiesByDay($trainingPlan, $dayToFind);
     if ($activities == FALSE) {
         echo "Today is a rest day.";
