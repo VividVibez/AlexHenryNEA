@@ -1,11 +1,14 @@
 <?php
+// Start the session to access session variables
 session_start();
 
-include 'functions.php';
-include 'planMaker.php';
+// Include necessary PHP files
+include 'functions.php'; // Include functions.php file
+include 'planMaker.php'; // Include planMaker.php file
 
+// Check if the "usr" session variable is not set
 if (!isset($_SESSION["usr"])) {
-    header("location: login.php");
+    header("location: login.php"); // Redirect to login.php if user is not logged in
 }
 ?>
 <!DOCTYPE html>
@@ -14,12 +17,11 @@ if (!isset($_SESSION["usr"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analytics</title>
+    <!-- External CSS stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link href="css/accordion.css" rel="stylesheet">
-    <link href="css/nav.css" rel="stylesheet">
-    
-    
+    <link href="css/accordion.css" rel="stylesheet"> <!-- Include CSS for accordion component -->
+    <link href="css/nav.css" rel="stylesheet"> <!-- Include CSS for navigation -->
 </head>
 <body>
 <nav>
@@ -34,15 +36,16 @@ if (!isset($_SESSION["usr"])) {
         <div class="logo">
         <?php 
             $usr = $_SESSION["usr"];
-            echo "<h1>$usr</h1>"; 
+            echo "<h1>$usr</h1>"; // Display the username
           ?>
         </div>
             <div class="menu-items">
+            <!-- Navigation links -->
             <li><a href="myPlan.php">My Plan</a></li>
             <li><a href="myDay.php">Today</a></li>
             <li><a href="myStopwatch.php">Stop Watch</a></li>
             <li><a href="#">Analytics</a></li>
-            <li><a href="logout.php">Logout</a></li>
+            <li><a href="logout.php">Logout</a></li> <!-- Logout link -->
         </div>
     </div>
 </div>
@@ -60,20 +63,20 @@ if (!isset($_SESSION["usr"])) {
           $history = json_decode($json,true); 
     
         } else {
-            $history = [];
+            $history = []; // Initialize $history as an empty array if the file doesn't exist
         }
-        echo '<div class="accordion">';
+        echo '<div class="accordion">'; // Start of accordion container
 
-        $x = 0;
-        $y = 0;
+        $x = 0; // Initialize $x variable
+        $y = 0; // Initialize $y variable
 
         do {
             $names = array_keys($history);
-            $name = $names[$y];
-            $data = $history[$name];
-            $z = 0;
-            $str_arr = preg_split ("/\,/", $data); 
-            $accNum = "accordion-button-" . $y+1;
+            $name = $names[$y]; // Get the name at index $y
+            $data = $history[$name]; // Get the data associated with the name
+            $z = 0; // Initialize $z variable
+            $str_arr = preg_split ("/\,/", $data); // Split the data string into an array
+            $accNum = "accordion-button-" . ($y+1); // Generate accordion button id
 
             echo "  
             <div class='accordion-item'>
@@ -83,28 +86,28 @@ if (!isset($_SESSION["usr"])) {
                 </button>
                 <div class='accordion-content'><p>";
 
+            // Loop through the data array
             foreach ($str_arr as $value) {
-                $progress = "Session " . $x+1 . ": " . $str_arr[$x];
-                echo $progress . str_repeat('&nbsp;', 5);
-
-                $x++;
-                $z++;
+                $progress = "Session " . ($x+1) . ": " . $str_arr[$x]; // Generate progress text
+                echo $progress . str_repeat('&nbsp;', 5); // Display progress
+                
+                $x++; // Increment $x
+                $z++; // Increment $z
 
                 if ($z == 8) {
-                    echo "<br></br>";
-                    $z = 0;
+                    echo "<br></br>"; // Add line break after every 8 items
+                    $z = 0; // Reset $z
                 }
-            
             } 
 
-            $x = 0;
-            $y++;
+            $x = 0; // Reset $x
+            $y++; // Increment $y
 
-            echo "</p></div></div>";
+            echo "</p></div></div>"; // Close accordion item
 
-        } while ($y < count($history));
+        } while ($y < count($history)); // Repeat until $y is less than the count of $history array
 
-        echo '</div>';
+        echo '</div>'; // End of accordion container
         
     ?>
 
