@@ -123,7 +123,7 @@ return $names; // Return array of activity names
     }
 
     // Define the day to find activities for
-    $dayToFind = "Day ". 2;
+    $dayToFind = "Day ". $DayOfWeekNumber;
     // Find activities for the specified day
     $activities = findActivitiesByDay($trainingPlan, $dayToFind);
     if ($activities == FALSE) {
@@ -137,7 +137,9 @@ return $names; // Return array of activity names
                 $name = str_replace(' ', '_', $name);
                 if (isset($_POST[$name])) {
                     // Save activity completion to history
-                    saveHistory($_POST[$name], $name);
+                    if (!empty($_POST[$name])) {
+                        saveHistory($_POST[$name], $name);
+                    }
                 }
             }
         }
