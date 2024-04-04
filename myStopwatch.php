@@ -6,6 +6,7 @@ include 'planMaker.php';
 
 if (!isset($_SESSION["usr"])) {
     header("location: login.php");
+    exit;
 }
 ?>
 <!DOCTYPE html>

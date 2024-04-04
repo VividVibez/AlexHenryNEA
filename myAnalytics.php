@@ -9,6 +9,7 @@ include 'planMaker.php'; // Include planMaker.php file
 // Check if the "usr" session variable is not set
 if (!isset($_SESSION["usr"])) {
     header("location: login.php"); // Redirect to login.php if user is not logged in
+    exit;
 }
 ?>
 <!DOCTYPE html>

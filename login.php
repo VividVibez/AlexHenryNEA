@@ -6,6 +6,7 @@ $_SESSION["questions"] = FALSE;
 
 if (isset($_SESSION["usr"])) {
     header("location: question1.php");
+    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -76,7 +77,7 @@ if (isset($_SESSION["usr"])) {
                         }
                         
                         header("location:" . $url);
-                        end;
+                        exit;
                     } else {
                         // Display error message if username or password are incorrect
                         echo "<div class='alert'>Username or Password are incorrect</div>";

@@ -5,5 +5,6 @@ session_start();
 unset($_SESSION["usr"]);
 // Redirect the user to the login.php page
 header("location: login.php");
+exit;
 ?>
 ?>

@@ -7,6 +7,7 @@ include 'planMaker.php'; // Including planMaker.php for plan creation functional
 // Redirect to login page if user is not logged in
 if (!isset($_SESSION["usr"])) {
     header("location: login.php");
+    exit;
 }
 ?>
 <!DOCTYPE html>

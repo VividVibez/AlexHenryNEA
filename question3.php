@@ -4,6 +4,7 @@ include 'functions.php';
 
 if (!isset($_SESSION["usr"])) {
     header("location: login.php");
+    exit;
 }
 
 ?>
@@ -27,6 +28,7 @@ if (!isset($_SESSION["usr"])) {
     if(array_key_exists('logout', $_POST)) { 
         unset($_SESSION["usr"]);
         header("location: login.php");
+        exit;
     } 
     ?>
 
@@ -59,6 +61,7 @@ if (!isset($_SESSION["usr"])) {
                             savequestion($_SESSION["usr"],"vacancy",$_POST["ava"]);
                             questionsDone($_SESSION["usr"]);
                             header("location: myPlan.php");
+                            exit;
                         }
                     }
                     ?>

@@ -3,6 +3,7 @@ session_start();
 include 'functions.php';
 if (!isset($_SESSION["usr"])) {
     header("location: login.php");
+    exit;
 }
 planSetup($_SESSION["usr"]);
 
@@ -19,6 +20,7 @@ function done($un) {
     
     if ($done == 1) {
         header("location: myPlan.php");
+        exit;
     }
 }
 done($_SESSION["usr"]);
@@ -43,6 +45,7 @@ done($_SESSION["usr"]);
     if(array_key_exists('logout', $_POST)) { 
         unset($_SESSION["usr"]);
         header("location: login.php");
+        exit;
     } 
     ?>
     <div class="wrapper">
@@ -73,6 +76,7 @@ done($_SESSION["usr"]);
                         if (isset($_POST["grade"])) {
                             savequestion($_SESSION["usr"], "grade", $_POST["grade"]);
                             header("location: question2.php");
+                            exit;
                         }
                     }
                     ?>
