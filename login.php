@@ -61,7 +61,7 @@ if (isset($_SESSION["usr"])) {
                     $username = strtolower($_POST["loginUsername"]); // Convert username to lowercase for consistency
                     $password = $_POST["loginPassword"];
 
-                    if (empty($username) && empty($password)) {
+                    if (empty($username) || empty($password)) {
                         die ("Please provide both username and password.");
                     }
 
