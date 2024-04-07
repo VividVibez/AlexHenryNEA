@@ -86,9 +86,9 @@ class ClimbingTrainingPlan
         return $values;  
     }
 
-    private function exerciseArrays() {
+    private function exerciseArrays($exercises) {
 
-        $exercises = $this->exercises;
+
         // Filter exercises to keep only strength-type exercises
         $strengthExercises = array_filter($exercises, function ($exercise) {
             return $exercise['type'] === 'strength';
@@ -171,7 +171,7 @@ class ClimbingTrainingPlan
         return $weekDays;
     }
 
-    private function createPlan() {
+    private function createPlan($exercises) {
 
         $typeOfDay = $this->numOfDays();
         $strengthDays = $typeOfDay[0];
@@ -181,7 +181,7 @@ class ClimbingTrainingPlan
         
         $days = $this->dayAssignment($strengthDays,$techniqueDays,$mixDays);
 
-        $exercises = $this->exerciseArrays();
+        $exercises = $this->exerciseArrays($exercises);
         $strengthExercises = $exercises[0];
         $techniqueExercises = $exercises[1];
         $conditioningExercises = $exercises[2];
