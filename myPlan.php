@@ -200,7 +200,7 @@ if (!isset($_SESSION["usr"])) {
     };
     if (isset($_POST['newPlan'])) {
       if ($_POST['newPlan'] == "0") {
-        $trainingPlan = newPlan($_SESSION["usr"]);
+        //$trainingPlan = newPlan($_SESSION["usr"]);
         $_POST['newPlan'] = 1;
       }
       print_r($_POST);
