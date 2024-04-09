@@ -111,7 +111,7 @@ if (!isset($_SESSION["usr"])) {
                     <input type='text' class='form__input' name='{$name}' id='{$name}' placeholder='{$activity['measurement']}' required='' />
                     <label for='name' class='form__label'>{$activity['measurement']}</label>
                 </div>
-                <button onclick='CollapseForm({$name})' type='submit' class='button-34' role='button'>Complete</button>"; // Submit button to complete activity
+                <button onclick='CollapseForm({$name})' type='submit' class='button' role='button'>Complete</button>"; // Submit button to complete activity
             echo "</form>";
             echo "</td>";        
             echo "</tr>";
@@ -120,9 +120,7 @@ if (!isset($_SESSION["usr"])) {
 // Close the activities table
 echo "</table>";
 return $names; // Return array of activity names
-
     }
-
     // Define the day to find activities for
     $dayToFind = "Day ". $DayOfWeekNumber;
     // Find activities for the specified day
@@ -206,29 +204,6 @@ function CollapseForm(name) {
 }
 
 /* CSS styling for buttons and form */
-.button-34 {   
-    position: absolute;
-    margin-left: 20rem;
-    background: #5E5DF0;
-    border-radius: 999px;
-    box-shadow: #5E5DF0 0 10px 20px -10px;
-    box-sizing: border-box;
-    color: #FFFFFF;
-    cursor: pointer;
-    font-family: Inter, Helvetica, "Apple Color Emoji", "Segoe UI Emoji", NotoColorEmoji, "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", EmojiSymbols, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 24px;
-    opacity: 1;
-    outline: 0 solid transparent;
-    padding: 8px 18px;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    width: fit-content;
-    word-break: break-word;
-    border: 0;
-}
 
 .form__label {
   font-family: 'Roboto', sans-serif;
