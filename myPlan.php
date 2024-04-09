@@ -21,30 +21,30 @@ if (!isset($_SESSION["usr"])) {
 </head>
 <body>
 <nav>
-    <div class="navbar">
-      <div class="container nav-container">
-          <input class="checkbox" type="checkbox" name="" id="" />
-          <div class="hamburger-lines">
-            <span class="line line1"></span>
-            <span class="line line2"></span>
-            <span class="line line3"></span>
-          </div>  
-        <div class="logo">
-          <?php 
-            $usr = $_SESSION["usr"];
-            echo "<h1>$usr</h1>"; // Displaying the username
-          ?>
-        </div>
-        <div class="menu-items">
-          <li><a href="#">My Plan</a></li>
-          <li><a href="myDay.php">Today</a></li>
-          <li><a href="myStopwatch.php">Stop Watch</a></li>
-          <li><a href="myAnalytics.php">Analytics</a></li>
-          <li><a href="logout.php">Logout</a></li>
-        </div>
+  <div class="navbar">
+    <div class="container nav-container">
+      <input class="checkbox" type="checkbox" name="" id="" />
+      <div class="hamburger-lines">
+        <span class="line line1"></span>
+        <span class="line line2"></span>
+        <span class="line line3"></span>
+      </div>  
+      <div class="logo">
+        <?php 
+          $usr = $_SESSION["usr"];
+          echo "<h1>$usr</h1>"; // Displaying the username
+        ?>
+      </div>
+      <div class="menu-items">
+        <li class="hide"><a href="#">My Plan</a></li>
+        <li><a href="myDay.php">Today</a></li>
+        <li><a href="myStopwatch.php">Stop Watch</a></li>
+        <li><a href="myAnalytics.php">Analytics</a></li>
+        <li><a href="logout.php">Logout</a></li>
       </div>
     </div>
-  </nav>
+  </div>
+</nav>
 
 <section class="days">
   <div class="container">
