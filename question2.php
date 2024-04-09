@@ -59,6 +59,7 @@ if (!isset($_SESSION["usr"])) {
                         
                         if (isset($_POST["focus"])) {
                             savequestion($_SESSION["usr"],"focus",$_POST["focus"]);
+                            questionsDone($_SESSION["usr"],2);
                             header("location: question3.php");
                             exit;
                         }

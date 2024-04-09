@@ -118,13 +118,13 @@ function planSetup($un) {
 }
 
 // Function to mark questions as done
-function questionsDone($usr) {
+function questionsDone($usr,$q) {
     // Connect to the database
     $conn = require __DIR__ . "/database.php";
 
     // SQL to update plan table to mark questions as answered
     $save = "UPDATE plan
-    SET answered=1
+    SET answered=$q
     WHERE username = '$usr'";
 
     // Initialize statement

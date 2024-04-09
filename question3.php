@@ -59,7 +59,7 @@ if (!isset($_SESSION["usr"])) {
                         
                         if (isset($_POST["ava"])) {
                             savequestion($_SESSION["usr"],"vacancy",$_POST["ava"]);
-                            questionsDone($_SESSION["usr"]);
+                            questionsDone($_SESSION["usr"],3);
                             header("location: myPlan.php");
                             exit;
                         }

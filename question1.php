@@ -19,6 +19,12 @@ function done($un) {
     $done = $row['answered'];
     
     if ($done == 1) {
+        header("location: question2.php");
+        exit;
+    } elseif ($done == 2) {
+        header("location: question3.php");
+        exit;
+    } elseif ($done == 3) {
         header("location: myPlan.php");
         exit;
     }
@@ -75,6 +81,7 @@ done($_SESSION["usr"]);
                         
                         if (isset($_POST["grade"])) {
                             savequestion($_SESSION["usr"], "grade", $_POST["grade"]);
+                            questionsDone($_SESSION["usr"],1);
                             header("location: question2.php");
                             exit;
                         }
