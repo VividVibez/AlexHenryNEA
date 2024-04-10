@@ -62,53 +62,53 @@ if (!isset($_SESSION["usr"])) {
       
           // Decode the JSON file 
           $history = json_decode($json,true); 
+
+          echo '<div class="accordion">'; // Start of accordion container
+
+          $x = 0; // Initialize $x variable
+          $y = 0; // Initialize $y variable
+  
+          do {
+              $names = array_keys($history);
+              $name = $names[$y]; // Get the name at index $y
+              $data = $history[$name]; // Get the data associated with the name
+              $z = 0; // Initialize $z variable
+              $str_arr = preg_split ("/\,/", $data); // Split the data string into an array
+              $accNum = "accordion-button-" . ($y+1); // Generate accordion button id
+  
+              echo "  
+              <div class='accordion-item'>
+                  <button id='{$accNum}' aria-expanded='false'>
+                  <span class='accordion-title'>{$name}</span>
+                  <span class='icon' aria-hidden='true'></span>
+                  </button>
+                  <div class='accordion-content'><p>";
+  
+              // Loop through the data array
+              foreach ($str_arr as $value) {
+                  $progress = "Session " . ($x+1) . ": " . $str_arr[$x]; // Generate progress text
+                  echo $progress . str_repeat('&nbsp;', 5); // Display progress
+                  
+                  $x++; // Increment $x
+                  $z++; // Increment $z
+  
+                  if ($z == 8) {
+                      echo "<br></br>"; // Add line break after every 8 items
+                      $z = 0; // Reset $z
+                  }
+              } 
+  
+              $x = 0; // Reset $x
+              $y++; // Increment $y
+  
+              echo "</p></div></div>"; // Close accordion item
+  
+          } while ($y < count($history)); // Repeat until $y is less than the count of $history array
+  
+          echo '</div>'; // End of accordion container
     
-        } else {
-            $history = []; // Initialize $history as an empty array if the file doesn't exist
         }
-        echo '<div class="accordion">'; // Start of accordion container
 
-        $x = 0; // Initialize $x variable
-        $y = 0; // Initialize $y variable
-
-        do {
-            $names = array_keys($history);
-            $name = $names[$y]; // Get the name at index $y
-            $data = $history[$name]; // Get the data associated with the name
-            $z = 0; // Initialize $z variable
-            $str_arr = preg_split ("/\,/", $data); // Split the data string into an array
-            $accNum = "accordion-button-" . ($y+1); // Generate accordion button id
-
-            echo "  
-            <div class='accordion-item'>
-                <button id='{$accNum}' aria-expanded='false'>
-                <span class='accordion-title'>{$name}</span>
-                <span class='icon' aria-hidden='true'></span>
-                </button>
-                <div class='accordion-content'><p>";
-
-            // Loop through the data array
-            foreach ($str_arr as $value) {
-                $progress = "Session " . ($x+1) . ": " . $str_arr[$x]; // Generate progress text
-                echo $progress . str_repeat('&nbsp;', 5); // Display progress
-                
-                $x++; // Increment $x
-                $z++; // Increment $z
-
-                if ($z == 8) {
-                    echo "<br></br>"; // Add line break after every 8 items
-                    $z = 0; // Reset $z
-                }
-            } 
-
-            $x = 0; // Reset $x
-            $y++; // Increment $y
-
-            echo "</p></div></div>"; // Close accordion item
-
-        } while ($y < count($history)); // Repeat until $y is less than the count of $history array
-
-        echo '</div>'; // End of accordion container
         
     ?>
 
